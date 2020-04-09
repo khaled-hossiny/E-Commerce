@@ -2,6 +2,8 @@ package entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER",uniqueConstraints = {
@@ -16,6 +18,8 @@ public class User {
     private String userJob;
     private String userAddress;
     private Credit userCredit;
+    private Set<Product> products= new HashSet<>();
+
 
     public User() {
     }
@@ -90,12 +94,24 @@ public class User {
         this.userAddress = userAddress;
     }
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="credit_id")
     public Credit getUserCredit() {
         return userCredit;
     }
 
     public void setUserCredit(Credit userCredit) {
         this.userCredit = userCredit;
+    }
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name="user_buy_product", joinColumns = {
+            @JoinColumn(name="user_id", nullable=false, updatable=false) }, inverseJoinColumns = {
+            @JoinColumn(name="product_ID", nullable=false, updatable=false) })
+    public Set<Product> getProducts() {
+        return this.products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
 
