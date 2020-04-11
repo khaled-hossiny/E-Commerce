@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "USER",uniqueConstraints = {
         @UniqueConstraint(columnNames = "user_id"),
         @UniqueConstraint(columnNames = "user_email") })
-public class User {
+public class User implements java.io.Serializable {
     private int userId;
     private String userName;
     private String userPassword;
@@ -19,13 +19,13 @@ public class User {
     private String userAddress;
     private Credit userCredit;
     private Cart userCart ;
-    private Set<Product> products= new HashSet<>();
+    private Set<UserBuyProduct> userProducts = new HashSet<UserBuyProduct>(0);
 
 
     public User() {
     }
 
-    public User(int userId, String userName, String userEmail, String userPassword, Date userBirthDate, String userJob, String userAddress,Credit userCredit,Cart userCart) {
+    public User(int userId, String userName, String userEmail, String userPassword, Date userBirthDate, String userJob, String userAddress,Credit userCredit,Cart userCart,Set<UserBuyProduct> userProducts) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -35,10 +35,11 @@ public class User {
         this.userAddress = userAddress;
         this.userCredit=userCredit;
         this.userCart=userCart;
+        this.userProducts = userProducts;
     }
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "user_id" ,  unique = true, nullable = false)
     public int getUserId() {
         return userId;
     }
@@ -46,6 +47,7 @@ public class User {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
     @Column(name = "user_name", nullable = false, length = 50)
     public String getUserName() {
         return userName;
@@ -105,20 +107,21 @@ public class User {
         this.userCredit = userCredit;
     }
 
-    /*
-    @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="user_buy_product", joinColumns = {
-            @JoinColumn(name="user_id", nullable=false, updatable=false) }, inverseJoinColumns = {
-            @JoinColumn(name="product_ID", nullable=false, updatable=false) })
-    public Set<Product> getProducts() {
-        return this.products;
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.USER", cascade=CascadeType.ALL)
+    public Set<UserBuyProduct> getUserProducts() {
+        return userProducts;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setUserProducts(Set<UserBuyProduct> userProducts) {
+        this.userProducts = userProducts;
     }
 
-     */
+
+
+
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="Cart_ID")
