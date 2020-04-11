@@ -2,6 +2,8 @@ package entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "ForeignKeyAssoCartEntity")
 @Table(name = "cart", uniqueConstraints = {
@@ -15,8 +17,9 @@ public class Cart implements Serializable {
     @Column(name = "Total_Cost" , nullable = false)
     private long totalCostOfCart ;
 
-    @ManyToOne
-    private Product product;
+    private Set<Product> products= new HashSet<>();
+
+
 
     public Cart() {
     }
@@ -35,5 +38,13 @@ public class Cart implements Serializable {
 
     public void setTotalCostOfCart(long totalCostOfCart) {
         this.totalCostOfCart = totalCostOfCart;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 }

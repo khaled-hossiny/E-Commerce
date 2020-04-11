@@ -18,13 +18,14 @@ public class User {
     private String userJob;
     private String userAddress;
     private Credit userCredit;
+    private Cart userCart ;
     private Set<Product> products= new HashSet<>();
 
 
     public User() {
     }
 
-    public User(int userId, String userName, String userEmail, String userPassword, Date userBirthDate, String userJob, String userAddress,Credit userCredit) {
+    public User(int userId, String userName, String userEmail, String userPassword, Date userBirthDate, String userJob, String userAddress,Credit userCredit,Cart userCart) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -33,6 +34,7 @@ public class User {
         this.userJob = userJob;
         this.userAddress = userAddress;
         this.userCredit=userCredit;
+        this.userCart=userCart;
     }
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -102,6 +104,8 @@ public class User {
     public void setUserCredit(Credit userCredit) {
         this.userCredit = userCredit;
     }
+
+    /*
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="user_buy_product", joinColumns = {
             @JoinColumn(name="user_id", nullable=false, updatable=false) }, inverseJoinColumns = {
@@ -112,6 +116,18 @@ public class User {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+     */
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="Cart_ID")
+    public Cart getUserCart() {
+        return userCart;
+    }
+
+    public void setUserCart(Cart userCart) {
+        this.userCart = userCart;
     }
 
 

@@ -17,8 +17,11 @@ public class Product implements Serializable {
     private long sale ;
     //rate of product
 
+    /*
     @ManyToMany
-    private Set<User> users ;
+    private Set<User> users  ;
+
+     */
 
 
     public Product() {
