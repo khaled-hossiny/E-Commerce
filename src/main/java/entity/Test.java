@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class Test {
     public static void main(String[] args) throws ParseException {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        /*SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
 
         User user = new User();
@@ -65,12 +65,12 @@ public class Test {
         userBuyProduct.setProduct(product);
         userBuyProduct.setUserID(user.getUserId());
         userBuyProduct.setProductID(product.getProductId());
-        userBuyProduct.setUserCart(cart);
+        userBuyProduct.setUserCart(cart);*/
 
 
 
-        session.beginTransaction();
-        session.getTransaction().commit();
+        /*session.beginTransaction();
+        session.getTransaction().commit();*/
         //System.out.println("Donnnnne");
 
 

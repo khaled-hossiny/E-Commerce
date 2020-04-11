@@ -7,13 +7,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import utility.HibernateUtil;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class AdminServiceImpl implements AdminService {
-    private Session session= HibernateUtil.getSessionFactory().openSession();
+    private Session session = HibernateUtil.getSessionFactory().openSession();
+
     @Override
     public int addProduct(Product product) {
         session.beginTransaction();
@@ -24,8 +26,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Product getProductById(int productId) {
-       Product product= session.get(Product.class, productId);
-       return product;
+        Product product = session.get(Product.class, productId);
+        return product;
     }
 
     @Override
@@ -34,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
         Root<Product> root = cq.from(Product.class);
         cq.select(root);
-        Query<Product> query = session.createQuery(cq);
+        TypedQuery<Product> query = session.createQuery(cq);
         return query.getResultList();
     }
 
@@ -63,7 +65,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public User viewCustomerProfile(int userId) {
-        User user= session.get(User.class, userId);
+        User user = session.get(User.class, userId);
         return user;
     }
 }

@@ -1,4 +1,4 @@
-import org.hibernate.cfg.AnnotationConfiguration;
+import com.fasterxml.classmate.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import java.io.File;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SchemaGenerator
 {
-    private AnnotationConfiguration cfg;
+    /*private AnnotationConfiguration cfg;
 
     public SchemaGenerator(String packageName) throws Exception
     {
@@ -33,7 +33,7 @@ public class SchemaGenerator
 
     /**
      * @param args
-     */
+     *//*
     public static void main(String[] args) throws Exception
     {
         SchemaGenerator gen = new SchemaGenerator("entity");
@@ -42,10 +42,10 @@ public class SchemaGenerator
         gen.generate(Dialect.HSQL);
     }
 
-    /**
+    *//**
      * Utility method used to fetch Class list based on a package name.
      * @param packageName (should be the package containing your annotated beans.
-     */
+     *//*
     private List getClasses(String packageName) throws Exception
     {
         List classes = new ArrayList();
@@ -83,9 +83,9 @@ public class SchemaGenerator
         return classes;
     }
 
-    /**
+    *//**
      * Holds the classnames of hibernate dialects for easy reference.
-     */
+     *//*
     private static enum Dialect
     {
         ORACLE("org.hibernate.dialect.Oracle10gDialect"),
@@ -101,5 +101,5 @@ public class SchemaGenerator
         {
             return dialectClass;
         }
-    }
+    }*/
 }
