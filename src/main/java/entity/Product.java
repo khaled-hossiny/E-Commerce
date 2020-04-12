@@ -2,12 +2,13 @@ package entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "product" , uniqueConstraints = {
         @UniqueConstraint(columnNames = "product_ID"),  @UniqueConstraint(columnNames = "product_Name")})
-public class Product implements Serializable {
+public class Product implements java.io.Serializable {
     private int productId ;
     private String productName ;
     private String productDiscription ;
@@ -15,24 +16,18 @@ public class Product implements Serializable {
     private long productCost ;
     private long productQuantity ;
     private long sale ;
-    //rate of product
-
-    /*
-    @ManyToMany
-    private Set<User> users  ;
-
-     */
-
+    private Set<CartContainProduct> cartContainProducts = new HashSet<CartContainProduct>(0);
 
     public Product() {
     }
 
-    public Product(String productName, String productDiscription, long productCost, long productQuantity, long sale) {
+    public Product(String productName, String productDiscription, long productCost, long productQuantity, long sale ,Set<CartContainProduct>cartContainProducts ) {
         this.productName = productName;
         this.productDiscription = productDiscription;
         this.productCost = productCost;
         this.productQuantity = productQuantity;
         this.sale = sale;
+        this.cartContainProducts=cartContainProducts;
     }
 
     @Id
@@ -91,4 +86,12 @@ public class Product implements Serializable {
         this.sale = sale;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product", cascade=CascadeType.ALL)
+    public Set<CartContainProduct> getCartContainProducts() {
+        return cartContainProducts;
+    }
+
+    public void setCartContainProducts(Set<CartContainProduct> cartContainProducts) {
+        this.cartContainProducts = cartContainProducts;
+    }
 }

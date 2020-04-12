@@ -17,13 +17,21 @@ public class Cart implements Serializable {
     @Column(name = "Total_Cost" , nullable = false)
     private long totalCostOfCart ;
 
-    private Set<Product> products= new HashSet<>();
+    private Set<CartContainProduct> cartContainProducts = new HashSet<CartContainProduct>(0);
 
 
 
     public Cart() {
     }
 
+    public Cart(long totalCostOfCart, Set<CartContainProduct> cartContainProducts) {
+        this.totalCostOfCart = totalCostOfCart;
+        this.cartContainProducts = cartContainProducts;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CART_ID" ,unique = true ,  nullable = false )
     public int getCartId() {
         return cartId;
     }
@@ -32,6 +40,7 @@ public class Cart implements Serializable {
         this.cartId = cartId;
     }
 
+    @Column(name = "CART_Total_COST" ,  nullable = false )
     public long getTotalCostOfCart() {
         return totalCostOfCart;
     }
@@ -40,11 +49,13 @@ public class Cart implements Serializable {
         this.totalCostOfCart = totalCostOfCart;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.cart", cascade=CascadeType.ALL)
+
+    public Set<CartContainProduct> getCartContainProducts() {
+        return cartContainProducts;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setCartContainProducts(Set<CartContainProduct> cartContainProducts) {
+        this.cartContainProducts = cartContainProducts;
     }
 }

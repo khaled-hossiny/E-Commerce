@@ -1,37 +1,37 @@
 package entity;
 
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_buy_product")
+@Table(name = "CART_Contaion_Product")
 @AssociationOverrides({
-        @AssociationOverride(name = "pk.USER",
-                joinColumns = @JoinColumn(name = "user_id")),
-        @AssociationOverride(name = "pk.category",
-                joinColumns = @JoinColumn(name = "product")) })
-public class UserBuyProduct implements java.io.Serializable {
-    private  UserProductID pk = new UserProductID();
-    private int quantity ;
+        @AssociationOverride(name = "pk.cart",
+                joinColumns = @JoinColumn(name = "CART_ID")),
+        @AssociationOverride(name = "pk.product",
+                joinColumns = @JoinColumn(name = "product_ID")) })
+public class CartContainProduct implements java.io.Serializable  {
+    private CartContainProductId pk = new CartContainProductId();
+    private long quantity ;
 
-    public UserBuyProduct() {
-    }
+
 
     @EmbeddedId
-    public UserProductID getPk() {
+    public CartContainProductId getPk() {
         return pk;
     }
 
-    public void setPk(UserProductID pk) {
+    public void setPk(CartContainProductId pk) {
         this.pk = pk;
     }
 
     @Transient
-    public User getUser() {
-        return getPk().getUser();
+    public Cart getCart() {
+        return getPk().getCart();
     }
 
-    public void setUser(User user) {
-        getPk().setUser(user);
+    public void setCart(Cart cart) {
+        getPk().setCart(cart);
     }
 
     @Transient
@@ -43,21 +43,22 @@ public class UserBuyProduct implements java.io.Serializable {
         getPk().setProduct(product);
     }
 
-    @Column(name = "Quantity_OF_Product", nullable = false)
-    public int getQuantity() {
+    @Column(name = "Quantity_PRoduct", nullable = false)
+    public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
+
     public boolean equals(Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
 
-        UserBuyProduct that = (UserBuyProduct) o;
+        CartContainProduct that = (CartContainProduct) o;
 
         if (getPk() != null ? !getPk().equals(that.getPk())
                 : that.getPk() != null)
@@ -69,5 +70,4 @@ public class UserBuyProduct implements java.io.Serializable {
     public int hashCode() {
         return (getPk() != null ? getPk().hashCode() : 0);
     }
-
 }
