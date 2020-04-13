@@ -1,25 +1,24 @@
 package entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "user_buy_product", schema = "ecommerce")
+@Table(name = "cart_product", schema = "ecommerce")
 @AssociationOverrides({
         @AssociationOverride(name = "pk.product",
                 joinColumns = @JoinColumn(name = "product_id")),
-        @AssociationOverride(name = "pk.buyer",
-                joinColumns = @JoinColumn(name = "buyer_id")) })
-public class UserBuyProduct implements Serializable {
+        @AssociationOverride(name = "pk.cart",
+                joinColumns = @JoinColumn(name = "cart_id")) })
+public class CartProduct {
     private Integer quantity;
-    private UserBuyProductPK pk = new UserBuyProductPK();
+    private CartProductPK pk = new CartProductPK();
 
     @EmbeddedId
-    public UserBuyProductPK getPk() {
+    public CartProductPK getPk() {
         return pk;
     }
 
-    public void setPk(UserBuyProductPK pk) {
+    public void setPk(CartProductPK pk) {
         this.pk = pk;
     }
 
@@ -29,19 +28,17 @@ public class UserBuyProduct implements Serializable {
     }
 
     @Transient
-    public Buyer getBuyer() {
-        return getPk().getBuyer();
+    public ShoppingCart getCart() {
+        return getPk().getCart();
     }
 
-    public void setBuyer(Buyer buyer) {
-        getPk().setBuyer(buyer);
+    public void setCart(ShoppingCart cart) {
+        getPk().setCart(cart);
     }
 
     public void setProduct(Product product) {
         getPk().setProduct(product);
     }
-
-
 
     @Basic
     @Column(name = "quantity", nullable = false)
@@ -52,7 +49,6 @@ public class UserBuyProduct implements Serializable {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
 
 
 }

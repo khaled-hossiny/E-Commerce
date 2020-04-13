@@ -1,97 +1,116 @@
 package entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "product" , uniqueConstraints = {
-        @UniqueConstraint(columnNames = "product_ID"),  @UniqueConstraint(columnNames = "product_Name")})
-public class Product implements java.io.Serializable {
-    private int productId ;
-    private String productName ;
-    private String productDiscription ;
-    //image of Product
-    private long productCost ;
-    private long productQuantity ;
-    private long sale ;
-    private Set<CartContainProduct> cartContainProducts = new HashSet<CartContainProduct>(0);
-
-    public Product() {
-    }
-
-    public Product(String productName, String productDiscription, long productCost, long productQuantity, long sale ,Set<CartContainProduct>cartContainProducts ) {
-        this.productName = productName;
-        this.productDiscription = productDiscription;
-        this.productCost = productCost;
-        this.productQuantity = productQuantity;
-        this.sale = sale;
-        this.cartContainProducts=cartContainProducts;
-    }
+public class Product {
+    private Integer id;
+    private String name;
+    private String description;
+    private int quantity;
+    private int price;
+    private Set<CartProduct> cartProductsById = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
+    private Set<UserBuyProduct> userBuyProductsById = new HashSet<>();
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_ID" , unique = true ,  nullable = false)
-    public int getProductId() {
-        return productId;
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    @Column (name = "product_Name" , nullable = false ,  length = 100)
-    public String getProductName() {
-        return productName;
+    @Basic
+    @Column(name = "name", nullable = false, length = 40)
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Column (name = "product_Disc" , nullable = false ,  length = 100)
-    public String getProductDiscription() {
-        return productDiscription;
+    @Basic
+    @Column(name = "description", nullable = false, length = 100)
+    public String getDescription() {
+        return description;
     }
 
-    public void setProductDiscription(String productDiscription) {
-        this.productDiscription = productDiscription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    @Column (name = "product_Cost" , nullable = false)
-    public long getProductCost() {
-        return productCost;
+    @Basic
+    @Column(name = "quantity", nullable = false)
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setProductCost(long productCost) {
-        this.productCost = productCost;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    @Column (name = "product_Quantity" , nullable = false)
-    public long getProductQuantity() {
-        return productQuantity;
+    @Basic
+    @Column(name = "price", nullable = false)
+    public int getPrice() {
+        return price;
     }
 
-    public void setProductQuantity(long productQuantity) {
-        this.productQuantity = productQuantity;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    @Column (name = "product_Sale" , nullable = false)
-    public long getSale() {
-        return sale;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(description, product.description);
     }
 
-    public void setSale(long sale) {
-        this.sale = sale;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product", cascade=CascadeType.ALL)
-    public Set<CartContainProduct> getCartContainProducts() {
-        return cartContainProducts;
+    @OneToMany(mappedBy = "pk.product")
+    public Set<CartProduct> getCartProductsById() {
+        return cartProductsById;
     }
 
-    public void setCartContainProducts(Set<CartContainProduct> cartContainProducts) {
-        this.cartContainProducts = cartContainProducts;
+    public void setCartProductsById(Set<CartProduct> cartProductsById) {
+        this.cartProductsById = cartProductsById;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "product_category", joinColumns = {
+            @JoinColumn(name = "product_id", nullable = false, updatable = false)
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "category_id", nullable = false, updatable = false)
+    })
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    @OneToMany(mappedBy = "pk.product")
+    public Set<UserBuyProduct> getUserBuyProductsById() {
+        return userBuyProductsById;
+    }
+
+    public void setUserBuyProductsById(Set<UserBuyProduct> userBuyProductsById) {
+        this.userBuyProductsById = userBuyProductsById;
     }
 }

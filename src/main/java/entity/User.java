@@ -1,137 +1,96 @@
 package entity;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
-@Table(name = "USER",uniqueConstraints = {
-        @UniqueConstraint(columnNames = "user_id"),
-        @UniqueConstraint(columnNames = "user_email") })
-public class User implements java.io.Serializable {
-    private int userId;
-    private String userName;
-    private String userPassword;
-    private String userEmail;
-    private Date userBirthDate;
-    private String userJob;
-    private String userAddress;
-    private Credit userCredit;
-    private Cart userCart ;
-    private Set<UserBuyProduct> userProducts = new HashSet<UserBuyProduct>(0);
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class User {
+    private Integer id;
+    private String address;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
 
 
-    public User() {
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
     }
 
-    public User(int userId, String userName, String userEmail, String userPassword, Date userBirthDate, String userJob, String userAddress,Credit userCredit,Cart userCart,Set<UserBuyProduct> userProducts) {
-        this.userId = userId;
-        this.userName = userName;
-        this.userPassword = userPassword;
-        this.userEmail = userEmail;
-        this.userBirthDate=userBirthDate;
-        this.userJob = userJob;
-        this.userAddress = userAddress;
-        this.userCredit=userCredit;
-        this.userCart=userCart;
-        this.userProducts = userProducts;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "user_id" ,  unique = true, nullable = false)
-    public int getUserId() {
-        return userId;
+    @Basic
+    @Column(name = "address", nullable = true, length = 200)
+    public String getAddress() {
+        return address;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    @Column(name = "user_name", nullable = false, length = 50)
-    public String getUserName() {
-        return userName;
+    @Basic
+    @Column(name = "first_name", nullable = false, length = 50)
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    @Column(name = "user_password", nullable = false, length = 50)
-    public String getUserPassword() {
-        return userPassword;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
-    @Column(name = "user_email",unique = true,nullable = false,length = 50)
-    public String getUserEmail() {
-        return userEmail;
+    @Basic
+    @Column(name = "last_name", nullable = false, length = 50)
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-    @Temporal(TemporalType.DATE)
-    @Column(name = "user_birth_date",nullable = false, length=10)
-    public Date getUserBirthDate() {
-        return userBirthDate;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public void setUserBirthDate(Date userBirthDate) {
-        this.userBirthDate = userBirthDate;
+    @Basic
+    @Column(name = "email", nullable = false, length = 40)
+    public String getEmail() {
+        return email;
     }
 
-    @Column(name = "user_job",unique = true,nullable = false,length = 50)
-    public String getUserJob() {
-        return userJob;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setUserJob(String userJob) {
-        this.userJob = userJob;
-    }
-    public String getUserAddress() {
-        return userAddress;
-    }
-    @Column(name = "user_address",nullable = false,length = 50)
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
-    }
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="credit_id")
-    public Credit getUserCredit() {
-        return userCredit;
+    @Basic
+    @Column(name = "password", nullable = false, length = 40)
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserCredit(Credit userCredit) {
-        this.userCredit = userCredit;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.USER", cascade=CascadeType.ALL)
-    public Set<UserBuyProduct> getUserProducts() {
-        return userProducts;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(address, user.address) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password);
     }
 
-    public void setUserProducts(Set<UserBuyProduct> userProducts) {
-        this.userProducts = userProducts;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, address, firstName, lastName, email, password);
     }
-
-
-
-
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="Cart_ID")
-    public Cart getUserCart() {
-        return userCart;
-    }
-
-    public void setUserCart(Cart userCart) {
-        this.userCart = userCart;
-    }
-
 
 }

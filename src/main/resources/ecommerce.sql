@@ -1,0 +1,12 @@
+create database if not exists ecommerce;
+use ecommerce;
+create table user( id int auto_increment primary key, address varchar(200), first_name varchar(50) not null, last_name varchar(50) not null, email varchar(40) not null unique, password varchar(40) not null);
+create table buyer( id int primary key, foreign key(id) references user(id) );
+create table admin( id int primary key, foreign key (id) references user(id) );
+create table product( id int auto_increment primary key, name varchar(40) not null unique, description varchar(100) not null, quantity int not null, price int not null);
+create table category( id int auto_increment primary key, name varchar(50) not null unique );
+create table credit_card( balance double not null, buyer_id int primary key, foreign key (buyer_id) references buyer(id) );
+create table shopping_cart( id int auto_increment primary key, buyer_id int, foreign key (buyer_id) references buyer(id) );
+create table user_buy_product( buyer_id int, product_id int, quantity int not null, order_time timestamp DEFAULT CURRENT_TIMESTAMP, primary key (buyer_id, product_id, order_time), foreign key (buyer_id) references buyer(id), foreign key (product_id) references product(id) );
+create table product_category( product_id int, category_id int, primary key (product_id, category_id), foreign key (product_id) references product(id), foreign key (category_id) references category(id) );
+create table cart_product( cart_id int, product_id int, quantity int not null, primary key (cart_id, product_id), foreign key (cart_id) references shopping_cart(id), foreign key (product_id) references product(id) );
