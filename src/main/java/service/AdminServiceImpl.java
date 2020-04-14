@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import entity.*;
 
 public class AdminServiceImpl implements AdminService {
     private Session session = HibernateUtil.getSessionFactory().openSession();
