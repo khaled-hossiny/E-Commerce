@@ -25,7 +25,7 @@
     <div class="" id="home">
       <nav class="navbar navbar-expand-xl">
         <div class="container h-100">
-          <a class="navbar-brand" href="index.jsp">
+          <a class="navbar-brand" href="#">
             <h1 class="tm-site-title mb-0">Product Admin</h1>
           </a>
           <button
@@ -91,10 +91,7 @@
               <p class="text-white">Accounts</p>
               <select class="custom-select">
                 <option value="0">Select account</option>
-                <option value="1">Admin</option>
-                <option value="2">Editor</option>
-                <option value="3">Merchant</option>
-                <option value="4">Customer</option>
+                <option value="1">User</option>
               </select>
             </div>
           </div>
@@ -193,9 +190,7 @@
       <footer class="tm-footer row tm-mt-small">
         <div class="col-12 font-weight-light">
           <p class="text-center text-white mb-0 px-4 small">
-            Copyright &copy; <b>2018</b> All rights reserved. 
-            
-            Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+
           </p>
         </div>
       </footer>

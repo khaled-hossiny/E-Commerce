@@ -131,12 +131,12 @@
             <!-- table container -->
             <a
               href="add-product.jsp"
-              class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
+              class="btn btn-primary btn-block text-uppercase mb-3">Add new User</a>
             <button class="btn btn-primary btn-block text-uppercase">
               Delete selected USER
             </button>
                   </footer>
-          </div>
+          </div>S
         </div>
         
 
