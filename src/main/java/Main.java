@@ -1,9 +1,15 @@
 import entity.*;
+import exceptions.NotEnoughCreditException;
+import exceptions.ProductNotInShoppingCartException;
+import exceptions.ProductNotInStockException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import service.AdminServiceImpl;
+import service.BuyerService;
+import service.BuyerServiceImpl;
 import service.UserServiceImp;
+import utility.HibernateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,7 +33,7 @@ public class Main {
         UserServiceImp userServiceImp = new UserServiceImp();
         AdminServiceImpl adminService = new AdminServiceImpl();
         System.out.println();
-        adminService.addProduct(createProduct());
+        adminService.addProduct(createProduct1());
 
         //buy(user);
 
@@ -71,10 +77,25 @@ public class Main {
 //        entityManager.persist(userBuyProduct);
 //
 //        entityManager.getTransaction().commit();
+        entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
+        createBuyer();
+        createProduct1();
+        createProduct2();
 
+//        Buyer khaled = entityManager.find(Buyer.class, 1);
+//        Product macbook = entityManager.find(Product.class, 2);
+//        Product iphone = entityManager.find(Product.class, 1);
+//        BuyerService buyerService = new BuyerServiceImpl();
+//        try {
+//            buyerService.buy(khaled.getId());
+//        } catch (NotEnoughCreditException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("");
     }
 
     public static Buyer createBuyer() {
+        entityManager.getTransaction().begin();
         Buyer user = new Buyer();
         user.setFirstName("Khaled");
         user.setLastName("ElHossiny");
@@ -91,10 +112,12 @@ public class Main {
         entityManager.persist(user);
         entityManager.persist(cart);
         entityManager.persist(creditCard);
+        entityManager.getTransaction().commit();
         return user;
     }
 
-    public static Product createProduct() {
+    public static Product createProduct1() {
+        entityManager.getTransaction().begin();
         Product product = new Product();
         product.setName("Iphone 11");
         product.setQuantity(4);
@@ -102,27 +125,23 @@ public class Main {
         product.setDescription("7amada");
         product.setImage("./img/user.png");
        // entityManager.persist(product);
+        product.setPrice(15000);
+        product.setDescription("iphone");
+        entityManager.persist(product);
+        entityManager.getTransaction().commit();
         return product;
     }
 
-    public static CartProduct addToShoppingCart(Buyer buyer, Product product, int quantity) {
-        ShoppingCart cart = buyer.getShoppingCartsById();
-        for(CartProduct cartProduct : cart.getCartProductsById()) {
-            if(cartProduct.getProduct().equals(product)) {
-                int quantityInCart = cartProduct.getQuantity();
-                cartProduct.setQuantity(quantityInCart + quantity);
-                return cartProduct;
-            }
-        }
-        CartProduct cartProduct = new CartProduct();
-        cartProduct.setCart(cart);
-        cartProduct.setProduct(product);
-        cartProduct.setQuantity(quantity);
-        cart.getCartProductsById().add(cartProduct);
-        product.getCartProductsById().add(cartProduct);
-        cart.calculateTotalCost();
-        entityManager.persist(cartProduct);
-        return cartProduct;
+    public static Product createProduct2() {
+        entityManager.getTransaction().begin();
+        Product product = new Product();
+        product.setName("MacBook Air");
+        product.setQuantity(2);
+        product.setPrice(10000);
+        product.setDescription("macbook");
+        entityManager.persist(product);
+        entityManager.getTransaction().commit();
+        return product;
     }
 
     public static void buy(Buyer buyer) {
@@ -139,6 +158,7 @@ public class Main {
         buyer.setUserBuyProductsById(purchases);
 
     }
+
 
 
 }
