@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+
 public class UserServiceImp implements UserService{
     private Session session= HibernateUtil.getSessionFactory().openSession();
 
@@ -26,6 +27,16 @@ public class UserServiceImp implements UserService{
     public User getUserById(int userId) {
         User user= session.get(User.class, userId);
         return user;    }
+
+    @Override
+    public boolean validateLogin(String email, String password) {
+        User user = null ;
+        user = session.get(User.class, email);
+        if (user != null && user.getPassword().equals(password)) {
+            return true;
+        }
+         else return false;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -59,4 +70,6 @@ public class UserServiceImp implements UserService{
         session.getTransaction().commit();
 
     }
+
+
 }
