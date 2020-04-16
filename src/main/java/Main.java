@@ -27,6 +27,7 @@ public class Main {
         UserServiceImp userServiceImp = new UserServiceImp();
         AdminServiceImpl adminService = new AdminServiceImpl();
         System.out.println();
+        adminService.addProduct(createProduct());
 
         //buy(user);
 
@@ -99,7 +100,8 @@ public class Main {
         product.setQuantity(4);
         product.setPrice(5000);
         product.setDescription("7amada");
-        entityManager.persist(product);
+        product.setImage("./img/user.png");
+       // entityManager.persist(product);
         return product;
     }
 
@@ -135,6 +137,7 @@ public class Main {
         int cost = buyer.getShoppingCartsById().geTotalCost();
         buyer.getCreditCardById().setBalance(balance - cost);
         buyer.setUserBuyProductsById(purchases);
+
     }
 
 

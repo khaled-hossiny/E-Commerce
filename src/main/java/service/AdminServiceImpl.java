@@ -18,6 +18,8 @@ import java.util.List;
 import entity.*;
 
 public class AdminServiceImpl implements AdminService {
+
+
     private EntityManager entityManager;
 
     {
@@ -58,6 +60,7 @@ public class AdminServiceImpl implements AdminService {
         prod.setQuantity(product.getQuantity());
         prod.setCategories(product.getCategories());
         prod.setCartProductsById(product.getCartProductsById());
+        prod.setImage(product.getImage());
         entityManager.merge(prod);
         entityManager.getTransaction().commit();
 
@@ -76,5 +79,8 @@ public class AdminServiceImpl implements AdminService {
     public User viewCustomerProfile(int userId) {
         User user = entityManager.find(User.class, userId);
         return user;
+    }
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 }

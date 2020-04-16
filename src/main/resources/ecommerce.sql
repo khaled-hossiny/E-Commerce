@@ -3,7 +3,7 @@ use ecommerce;
 create table user( id int auto_increment primary key, address varchar(200), first_name varchar(50) not null, last_name varchar(50) not null, email varchar(40) not null unique, password varchar(40) not null);
 create table buyer( id int primary key, foreign key(id) references user(id) );
 create table admin( id int primary key, foreign key (id) references user(id) );
-create table product( id int auto_increment primary key, name varchar(40) not null unique, description varchar(100) not null, quantity int not null, price int not null);
+create table product( id int auto_increment primary key, name varchar(40) not null unique, description varchar(100) not null, quantity int not null, price int not null,image varchar(100) not null);
 create table category( id int auto_increment primary key, name varchar(50) not null unique );
 create table credit_card( balance double not null, buyer_id int primary key, foreign key (buyer_id) references buyer(id) );
 create table shopping_cart( id int auto_increment primary key, buyer_id int, foreign key (buyer_id) references buyer(id) );
