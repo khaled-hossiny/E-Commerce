@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="service.AdminServiceImpl"%>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -94,7 +96,8 @@
             </div>
             <div class="row tm-edit-product-row">
               <div class="col-xl-6 col-lg-6 col-md-12">
-                <form action="" method="post" class="tm-edit-product-form">
+                <form action="ShowProducts" method="post" class="tm-edit-product-form" method="post"
+                      enctype="multipart/form-data">
                   <div class="form-group mb-3">
                     <label
                       for="name"
@@ -104,7 +107,7 @@
                       id="name"
                       name="name"
                       type="text"
-                      value="Lorem Ipsum Product"
+                      value="${product.name}"
                       class="form-control validate"
                     />
                   </div>
@@ -118,19 +121,19 @@
                       class="form-control validate tm-small"
                       rows="5"
                       required
-                    >Lorem ipsum dolor amet gentrify glossier locavore messenger bag chillwave hashtag irony migas wolf kale chips small batch kogi direct trade shaman.</textarea>
+                    >${product.description}</textarea>
                   </div>
                   <div class="row">
                       <div class="form-group mb-3 col-xs-12 col-sm-6">
                           <label
-                            for="expire_date"
-                            >Expire Date
+                            for="price"
+                            >Price
                           </label>
                           <input
-                            id="expire_date"
-                            name="expire_date"
+                            id="price"
+                            name="price"
                             type="text"
-                            value="22 Oct, 2020"
+                            value="${product.price}"
                             class="form-control validate"
                             data-large-mode="true"
                           />
@@ -144,31 +147,83 @@
                             id="stock"
                             name="stock"
                             type="text"
-                            value="19,765"
+                            value="${product.quantity}"
                             class="form-control validate"
                           />
                         </div>
                   </div>
                   
                 </form></div>
-              <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-                <div class="tm-product-img-edit mx-auto">
-                  <img src="img/product-image.jpg" alt="Product image" class="img-fluid d-block mx-auto">
-                  <i
-                    class="fas fa-cloud-upload-alt tm-upload-icon"
-                    onclick="document.getElementById('fileInput').click();"
-                  ></i>
+                <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4" id="back"
+                style="position:absolute;top:30px;right:50px;">
+                <div style="position:absolute;top:30px;right:50px; background-color: #f8694a;height: 200px;width: 300px;">
+                <%--                  <label style="display: block;"><b>Product Image</b></label>--%>
+                <img id="productImageDisplay" hidden="true" src="${product.image}"/>
+                <input type="file" onchange="loadFile(event)" id="file" name="file" size="60"
+                required>
+                <!-- To change the product image based on the uploaded image -->
+                <script>
+                var loadFile = function (event) {
+                var output = document.getElementById('productImageDisplay');
+                output.height =300;
+                output.width = 300;
+                output.hidden = false;
+                output.src = URL.createObjectURL(event.target.files[0]);
+
+                };
+                </script>
+                <%--              <input--%>
+                <%--                      id="imageBtn"--%>
+                <%--                      required--%>
+                <%--                      type="button"--%>
+                <%--                      style="position:absolute;top:100px;right:30px;background-color: #f8694a;height: 50px;width: 200px;"--%>
+                <%--                      class="btn btn-primary btn-block mx-auto"--%>
+                <%--                      value="UPLOAD PRODUCT IMAGE"--%>
+                <%--                      onclick="document.getElementById('fileName').click();">--%>
                 </div>
-                <div class="custom-file mt-3 mb-3">
-                  <input id="fileInput" type="file" style="display:none;" />
-                  <input
-                    type="button"
-                    class="btn btn-primary btn-block mx-auto"
-                    value="CHANGE IMAGE NOW"
-                    onclick="document.getElementById('fileInput').click();"
-                  />
+
+                <%--                <label><b><br>Description</b></label>--%>
+                <%--                <textarea placeholder="Enter product description" name="productDescription" required></textarea>--%>
+                <%--               <br><br><br><br><br><br><br><br><br>--%>
+                <%--              <div>--%>
+                <%--                <input--%>
+                <%--                                    id="imageBtn"--%>
+                <%--                                    required--%>
+                <%--                                    type="button"--%>
+                <%--                                    style="position:absolute;top:100px;right:30px;background-color: #f8694a;height: 50px;width: 200px;"--%>
+                <%--                                    value="UPLOAD PRODUCT IMAGE"--%>
+                <%--                                    onclick="document.getElementById('productImage').click();">--%>
+                <%--              </div>--%>
+                <%--              </div>--%>
+
+                <%--                <div  class="tm-product-img-dummy mx-auto">--%>
+                <%--                  <i--%>
+                <%--                    class="fas fa-cloud-upload-alt tm-upload-icon"--%>
+                <%--                    onclick="document.getElementById('fileName').click();"--%>
+
+                <%--                  ></i>--%>
+                <%--                </div>--%>
+                <%--                <div   class="custom-file mt-3 mb-3">--%>
+
+                <%--                  <input id="fileName"  name="fileName" type="file"  onchange="loadFile(event)" style="display:none; background-color: #1d2124"; size="30" required />--%>
+
+                <%--                  <input--%>
+                <%--                    id="imageBtn"--%>
+                <%--                    required--%>
+                <%--                    type="button"--%>
+                <%--                    class="btn btn-primary btn-block mx-auto"--%>
+                <%--                    value="UPLOAD PRODUCT IMAGE"--%>
+                <%--                    onclick="document.getElementById('fileName').click();"--%>
+                <%--                  />--%>
+                <%--                  <script>--%>
+                <%--                    var loadFile = function (event) {--%>
+                <%--                      var output = document.getElementById('back');--%>
+                <%--                      output.style.backgroundImage = URL.createObjectURL(event.target.files[0]);--%>
+                <%--                    }--%>
+                <%--                  </script>--%>
+
+                <%--                </div>--%>
                 </div>
-              </div>
               <div class="col-12">
                 <button type="submit" class="btn btn-primary btn-block text-uppercase">Update Now</button>
               </div>
@@ -194,12 +249,12 @@
     <!-- https://jqueryui.com/download/ -->
     <script src="js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
-    <script>
-      $(function() {
-        $("#expire_date").datepicker({
-          defaultDate: "10/22/2020"
-        });
-      });
-    </script>
+<%--    <script>--%>
+<%--      $(function() {--%>
+<%--        $("#expire_date").datepicker({--%>
+<%--          defaultDate: "10/22/2020"--%>
+<%--        });--%>
+<%--      });--%>
+<%--    </script>--%>
   </body>
 </html>

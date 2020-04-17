@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="service.AdminServiceImpl"%>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -85,30 +87,40 @@
         <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
           <div class="tm-bg-primary-dark tm-block tm-block-products">
             <div class="tm-product-table-container">
-              <table class="table table-hover tm-table-small tm-product-table">
+              <table class="table table-hover tm-table-small tm-product-table" id="products" name="products">
                 <thead>
                   <tr>
                     <th scope="col">&nbsp;</th>
                     <th scope="col">PRODUCT NAME</th>
-                    <th scope="col">UNIT SOLD</th>
-                    <th scope="col">IN STOCK</th>
-                    <th scope="col">EXPIRE DATE</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">STOCK</th>
+                    <th scope="col">Description</th>
                     <th scope="col">&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                <c:forEach items="${list}" var="row">
+                  <tr onclick="update(${row.id});">
                     <th scope="row"><input type="checkbox" /></th>
-                    <td class="tm-product-name">Lorem Ipsum Product 1</td>
-                    <td>1,450</td>
-                    <td>550</td>
-                    <td>28 March 2019</td>
+                    <td class="tm-product-name" ><c:out value="${row.name}"/>
+<%--                      <html:param name="id" value="${row.id}" />--%>
+
+<%--                      <html:link action="update();">--%>
+<%--                      --%>
+<%--                      </html:link>--%>
+                    </td>
+                    </a>
+                    <td><c:out value="${row.price}"/></td>
+                    <td><c:out value="${row.quantity}"/></td>
+                    <td><c:out value="${row.description}"/></td>
                     <td>
                       <a href="#" class="tm-product-delete-link">
                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
                       </a>
                     </td>
+
                   </tr>
+                </c:forEach>
 <%--                  <tr>--%>
 <%--                    <th scope="row"><input type="checkbox" /></th>--%>
 <%--                    <td class="tm-product-name">Lorem Ipsum Product 2</td>--%>
@@ -360,12 +372,19 @@
     <!-- https://jquery.com/download/ -->
     <script src="js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
-    <script>
-      $(function() {
-        $(".tm-product-name").on("click", function() {
-          window.location.href = "edit-product.jsp";
-        });
-      });
-    </script>
+<%--                        <script>--%>
+<%--                          $(function() {--%>
+<%--                            $(".tm-product-name").on("click", function(event) {--%>
+<%--                              window.location.href = "EditProducts?id="+event.data.id;--%>
+<%--                              &lt;%&ndash;<a href="EditProducts?id="+<%="${row.id}"%>/>&ndash;%&gt;--%>
+<%--                            });--%>
+<%--                          });--%>
+<%--                        </script>--%>
+  <script>
+    function update(id) {
+      window.location.href = "EditProducts?id="+id;
+    }
+  </script>
+
   </body>
 </html>

@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -105,6 +104,7 @@
                                 <input
                                         id="name"
                                         name="name"
+                                        pattern="[a-zA-Z0-9]+" minlength="2" maxlength="50"
                                         type="text"
                                         class="form-control validate"
                                         required
@@ -113,6 +113,7 @@
                             <div class="form-group mb-3">
                                 <label
                                         for="desc"
+                                        pattern="[a-zA-Z0-9]+" minlength="4" maxlength="50"
                                 >Description</label
                                 >
                                 <textarea
@@ -120,6 +121,7 @@
                                         id="desc"
                                         class="form-control validate"
                                         rows="3"
+
                                         required
                                 ></textarea>
                             </div>
@@ -134,7 +136,7 @@
                                             name="price"
                                             type="number"
                                             min="0"
-                                            max="100"
+                                            max="1000000"
                                             class="form-control validate"
                                             data-large-mode="true"
                                             required
@@ -169,7 +171,7 @@
                             <script>
                                 var loadFile = function (event) {
                                     var output = document.getElementById('productImageDisplay');
-                                    output.height = 200;
+                                    output.height =300;
                                     output.width = 300;
                                     output.hidden = false;
                                     output.src = URL.createObjectURL(event.target.files[0]);

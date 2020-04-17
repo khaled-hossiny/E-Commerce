@@ -120,7 +120,8 @@ public class AddProduct extends HttpServlet {
         product.setImage(filePath);
         adminService.addProduct(product);
 
-        request.getRequestDispatcher("/products.jsp").forward(request, response);
+        request.getRequestDispatcher("ShowProducts").include(request, response);
+
 
 
     }
