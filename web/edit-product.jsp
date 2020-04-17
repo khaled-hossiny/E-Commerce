@@ -158,7 +158,7 @@
                 style="position:absolute;top:30px;right:50px;">
                 <div style="position:absolute;top:30px;right:50px; background-color: #f8694a;height: 200px;width: 300px;">
                 <%--                  <label style="display: block;"><b>Product Image</b></label>--%>
-                <img id="productImageDisplay" hidden="true" src="${product.image}"/>
+                <img id="productImageDisplay" src="${pageContext.request.contextPath}/file/${product.image}" height="300" width="300"/>
                 <input type="file" onchange="loadFile(event)" id="file" name="file" size="60"
                 required>
                 <!-- To change the product image based on the uploaded image -->

@@ -5,6 +5,7 @@ import exceptions.ProductNotInStockException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import service.AdminServiceImpl;
 import service.BuyerService;
 import service.BuyerServiceImpl;
@@ -14,6 +15,8 @@ import utility.HibernateUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,8 +24,8 @@ import java.util.stream.Collectors;
 public class Main {
     static EntityManager entityManager;
     public static void main(String[] args) {
-//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("E-commerce");
-//        entityManager = entityManagerFactory.createEntityManager();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("E-commerce");
+        entityManager = entityManagerFactory.createEntityManager();
 //        entityManager.getTransaction().begin();
 //        Buyer user = createBuyer();
 //        Product product = createProduct();
@@ -33,7 +36,7 @@ public class Main {
         UserServiceImp userServiceImp = new UserServiceImp();
         AdminServiceImpl adminService = new AdminServiceImpl();
         System.out.println();
-        adminService.addProduct(createProduct1());
+        //adminService.addProduct(createProduct1());
 
         //buy(user);
 
@@ -79,8 +82,11 @@ public class Main {
 //        entityManager.getTransaction().commit();
         entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
         createBuyer();
-        createProduct1();
-        createProduct2();
+        //createProduct1();
+        //createProduct2();
+
+        TypedQuery<User> q = entityManager.createQuery("from User", User.class);
+        List<User> userList = q.getResultList();
 
 //        Buyer khaled = entityManager.find(Buyer.class, 1);
 //        Product macbook = entityManager.find(Product.class, 2);

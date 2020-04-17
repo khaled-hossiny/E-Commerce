@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import service.AdminService;
 import service.AdminServiceImpl;
+import utility.PropertiesUtil;
 
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -28,7 +29,7 @@ public class AddProduct extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     // location to store file uploaded
-    private static final String UPLOAD_DIRECTORY = "upload";
+    private static final String UPLOAD_DIRECTORY = PropertiesUtil.uploadsPath();
 
     // upload settings
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
@@ -63,8 +64,10 @@ public class AddProduct extends HttpServlet {
 
         // constructs the directory path to store upload file
         // this path is relative to application's directory
-        String uploadPath = getServletContext().getRealPath("")
-                + File.separator + UPLOAD_DIRECTORY;
+//        String uploadPath = getServletContext().getRealPath("")
+//                + File.separator + UPLOAD_DIRECTORY;
+
+        String uploadPath = UPLOAD_DIRECTORY;
 
         // creates the directory if it does not exist
         File uploadDir = new File(uploadPath);
