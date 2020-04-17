@@ -51,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void editProduct(long id, Product product) {
+    public void editProduct(int id, Product product) {
         entityManager.getTransaction().begin();
         Product prod = entityManager.find(Product.class, id);
         prod.setPrice(product.getPrice());
@@ -68,11 +68,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteProduct(long id) {
+    public int deleteProduct(int id) {
         entityManager.getTransaction().begin();
         Product product = entityManager.find(Product.class, id);
         entityManager.remove(product);
         entityManager.getTransaction().commit();
+        if(entityManager.contains(product)){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
     @Override

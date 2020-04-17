@@ -25,7 +25,7 @@ public class ShowProducts extends HttpServlet {
         list=adminService.getAllProducts();
         req.setAttribute("list", list);
         RequestDispatcher ry = req.getRequestDispatcher("products.jsp");
-        ry.include(req, resp);
+        ry.forward(req, resp);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class ShowProducts extends HttpServlet {
         list=adminService.getAllProducts();
         req.setAttribute("list", list);
         RequestDispatcher ry = req.getRequestDispatcher("products.jsp");
-        ry.include(req, resp);
+        ry.forward(req, resp);
     }
 }

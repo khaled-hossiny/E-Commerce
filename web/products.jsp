@@ -100,9 +100,9 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${list}" var="row">
-                  <tr onclick="update(${row.id});">
+                  <tr >
                     <th scope="row"><input type="checkbox" /></th>
-                    <td class="tm-product-name" ><c:out value="${row.name}"/>
+                    <td class="tm-product-name" onclick="update(${row.id});"><c:out value="${row.name}"/>
 <%--                      <html:param name="id" value="${row.id}" />--%>
 
 <%--                      <html:link action="update();">--%>
@@ -113,8 +113,8 @@
                     <td><c:out value="${row.price}"/></td>
                     <td><c:out value="${row.quantity}"/></td>
                     <td><c:out value="${row.description}"/></td>
-                    <td>
-                      <a href="#" class="tm-product-delete-link">
+                    <td onclick="remove(${row.id});">
+                      <a href="#" class="tm-product-delete-link" >
                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
                       </a>
                     </td>
@@ -248,9 +248,9 @@
             <a
               href="add-product.jsp"
               class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
-            <button class="btn btn-primary btn-block text-uppercase">
-              Delete selected products
-            </button>
+<%--            <button class="btn btn-primary btn-block text-uppercase">--%>
+<%--              Delete selected products--%>
+<%--            </button>--%>
           </div>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
@@ -385,6 +385,11 @@
       window.location.href = "EditProducts?id="+id;
     }
   </script>
+    <script>
+      function remove(id) {
+        window.location.href = "RemoveProduct?id="+id;
+      }
+    </script>
 
   </body>
 </html>
