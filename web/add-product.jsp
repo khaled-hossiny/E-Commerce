@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="service.AdminServiceImpl"%>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -21,9 +23,17 @@
     Product Admin CSS Template
     https://templatemo.com/tm-524-product-admin
     -->
+    <script>
+        if (!!window.performance && window.performance.navigation.type === 2) {
+            // value 2 means "The page was accessed by navigating into the history"
+            console.log('Reloading');
+            window.location.reload(); // reload whole page
+
+        }
+    </script>
 </head>
 
-<body>
+<body onload="">
 <nav class="navbar navbar-expand-xl">
     <div class="container h-100">
         <a class="navbar-brand" href="#">
@@ -95,7 +105,7 @@
                 <div class="row tm-edit-product-row">
                     <div class="col-xl-6 col-lg-6 col-md-12">
                         <form action="AddProduct" class="tm-edit-product-form" method="post"
-                              enctype="multipart/form-data">
+                              enctype="multipart/form-data" >
                             <div class="form-group mb-3">
                                 <label
                                         for="name"
@@ -124,6 +134,25 @@
 
                                         required
                                 ></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label
+                                        for="category"
+                                >Category</label
+                                >
+                                <select
+                                        class="custom-select tm-select-accounts"
+                                        id="category"
+                                        name="category"
+                                >
+                                    <option selected>Select category</option>
+                                    <c:forEach items="${categories}" var="row2">
+                                    <option> <c:out value="${row2.name}"/></option>
+                               </c:forEach>
+<%--                                    <option value="2">Kids Clothes</option>--%>
+<%--                                    <option value="3">Shoes</option>--%>
+<%--                                    <option value="4">Sport Wear</option>--%>
+                                </select>
                             </div>
                             <div class="row">
                                 <div class="form-group mb-3 col-xs-12 col-sm-6">
@@ -257,9 +286,9 @@
 <script src="js/bootstrap.min.js"></script>
 <!-- https://getbootstrap.com/ -->
 <script>
-    // $(function() {
-    //   $("#expire_date").datepicker();
-    // });
+  function refresh(){
+        window.refresh();
+  };
 </script>
 </body>
 </html>

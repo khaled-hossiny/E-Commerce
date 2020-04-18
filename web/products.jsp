@@ -21,6 +21,14 @@
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
 	-->
+    <script>
+      if (!!window.performance && window.performance.navigation.type === 2) {
+        // value 2 means "The page was accessed by navigating into the history"
+        console.log('Reloading');
+        window.location.reload();
+      };// reload whole page
+
+    </script>
   </head>
 
   <body id="reportsPage">
@@ -246,7 +254,7 @@
             </div>
             <!-- table container -->
             <a
-              href="add-product.jsp"
+              href="AddProduct"
               class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
 <%--            <button class="btn btn-primary btn-block text-uppercase">--%>
 <%--              Delete selected products--%>
@@ -257,116 +265,36 @@
           <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
             <h2 class="tm-block-title">Product Categories</h2>
             <div class="tm-product-table-container">
+
               <table class="table tm-table-small tm-product-table">
                 <tbody>
+
+                <c:forEach items="${categories}" var="row2">
                   <tr>
-                    <td class="tm-product-name">Product Category 1</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
+                    <td class="tm-product-name"> <c:out value="${row2.name}"/></td>
                   </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 2</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 3</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 4</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 5</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 6</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 7</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 8</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 9</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 10</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tm-product-name">Product Category 11</td>
-                    <td class="text-center">
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
-                    </td>
-                  </tr>
+                </c:forEach>
+
                 </tbody>
               </table>
             </div>
-            <!-- table container -->
-            <button class="btn btn-primary btn-block text-uppercase mb-3">
-              Add new category
-            </button>
+            <a
+                    href="add-category.jsp"
+                    class="btn btn-primary btn-block text-uppercase mb-3"> Add new category</a>
+
           </div>
         </div>
       </div>
     </div>
-    <footer class="tm-footer row tm-mt-small">
-      <div class="col-12 font-weight-light">
-        <p class="text-center text-white mb-0 px-4 small">
-          Copyright &copy; <b>2018</b> All rights reserved. 
-          
-          Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
-        </p>
-      </div>
-    </footer>
+<%--    <footer class="tm-footer row tm-mt-small">--%>
+<%--      <div class="col-12 font-weight-light">--%>
+<%--        <p class="text-center text-white mb-0 px-4 small">--%>
+<%--          Copyright &copy; <b>2018</b> All rights reserved.--%>
+
+<%--          Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>--%>
+<%--        </p>--%>
+<%--      </div>--%>
+<%--    </footer>--%>
 
     <script src="js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
@@ -390,6 +318,12 @@
         window.location.href = "RemoveProduct?id="+id;
       }
     </script>
+    <script>
+      function removeCat(id) {
+        window.location.href = "RemoveCategory?id="+id;
+      }
+    </script>
+
 
   </body>
 </html>

@@ -21,6 +21,13 @@
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
 	-->
+    <script>
+        if (!!window.performance && window.performance.navigation.type === 2) {
+            // value 2 means "The page was accessed by navigating into the history"
+            console.log('Reloading');
+            window.location.reload(); };// reload whole page
+
+    </script>
 </head>
 
 <body id="reportsPage">

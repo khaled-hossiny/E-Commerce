@@ -12,6 +12,10 @@
         <servlet-class>servlet.AddProduct</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AddCategory</servlet-name>
+        <servlet-class>servlet.AddCategory</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ShowProducts</servlet-name>
         <servlet-class>servlet.ShowProducts</servlet-class>
     </servlet>
@@ -50,6 +54,10 @@
     <servlet-mapping>
         <servlet-name>RemoveProduct</servlet-name>
         <url-pattern>/RemoveProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCategory</servlet-name>
+        <url-pattern>/AddCategory</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>ShowUsers</welcome-file>

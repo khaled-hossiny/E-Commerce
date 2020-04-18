@@ -1,66 +1,63 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlet;
-import entity.Product;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import service.AdminServiceImpl;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
 
+import entity.Category;
+import entity.Product;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import service.AdminService;
+import service.AdminServiceImpl;
+import utility.PropertiesUtil;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 @MultipartConfig
 public class EditProduct extends HttpServlet {
-
- AdminServiceImpl adminService=new AdminServiceImpl();
     private static final long serialVersionUID = 1L;
 
     // location to store file uploaded
-    private static final String UPLOAD_DIRECTORY = "upload";
+    private static final String UPLOAD_DIRECTORY = PropertiesUtil.uploadsPath();
 
     // upload settings
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
     private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
+    AdminServiceImpl adminService = new AdminServiceImpl();
+    private boolean check=true;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productId = request.getParameter("id");
 
         Product product = adminService.getProductById(Integer.parseInt(productId));
         request.setAttribute("product", product);
-
+        List<Category> categories=new ArrayList<>();
+        categories=adminService.getAllCategory();
+        request.setAttribute("categories",categories);
         RequestDispatcher dispatcher = request.getRequestDispatcher("edit-product.jsp");
         dispatcher.forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        Product product = new Product();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productId = request.getParameter("id");
-        System.out.println(productId);
-
+        // configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();
         // sets memory threshold - beyond which files are stored in disk
         factory.setSizeThreshold(MEMORY_THRESHOLD);
@@ -77,8 +74,10 @@ public class EditProduct extends HttpServlet {
 
         // constructs the directory path to store upload file
         // this path is relative to application's directory
-        String uploadPath = getServletContext().getRealPath("")
-                + File.separator + UPLOAD_DIRECTORY;
+//        String uploadPath = getServletContext().getRealPath("")
+//                + File.separator + UPLOAD_DIRECTORY;
+
+        String uploadPath = UPLOAD_DIRECTORY;
 
         // creates the directory if it does not exist
         File uploadDir = new File(uploadPath);
@@ -125,19 +124,32 @@ public class EditProduct extends HttpServlet {
             request.setAttribute("message",
                     "There was an error: " + ex.getMessage());
         }
-
-        System.out.println("stock is "+request.getParameter("stock"));
-        System.out.println("price is "+request.getParameter("price"));
+        System.out.println("Imaggggggggggg"+request.getParameter("img"));
+        Product product = new Product();
         product.setName(request.getParameter("name"));
         product.setQuantity(Integer.parseInt(request.getParameter("stock")));
         product.setPrice(Integer.parseInt(request.getParameter("price")));
         product.setDescription(request.getParameter("desc"));
-        product.setImage(filePath);
+        product.setImage(request.getParameter("img"));
+        System.out.println(filePath);
+        List<Product> products=adminService.getAllProducts();
 
-        adminService.editProduct(Integer.parseInt(productId),product);
-        request.setAttribute("isSucceed", "sucess");
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ShowProducts");
-        dispatcher.forward(request, response);
+        for (int i = 0; i<products.size(); i++){
+            if(products.get(i).getName().equals(name)){
+                check=false;
+                break;
+            }
+        }
+        if(check==true) {
+            adminService.editProduct(Integer.parseInt(productId),product);
+
+            //request.getRequestDispatcher("ShowProducts").include(request, response);
+            response.sendRedirect("ShowProducts");
+        }else{
+            request.getRequestDispatcher("ErrorPage.html").include(request, response);
+        }
+
     }
+
 }

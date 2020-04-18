@@ -86,7 +86,41 @@ public class AdminServiceImpl implements AdminService {
         User user = entityManager.find(User.class, userId);
         return user;
     }
+
+    @Override
+    public List<Category> getAllCategory() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+        Root<Category> root = cq.from(Category.class);
+        cq.select(root);
+        TypedQuery<Category> query = entityManager.createQuery(cq);
+        System.out.println("size is "+query.getResultList().size());
+        return query.getResultList();
+    }
+
+    @Override
+    public int addCategory(Category category) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(category);
+        entityManager.getTransaction().commit();
+        return category.getId();
+    }
+
     public EntityManager getEntityManager() {
         return entityManager;
     }
+
+//    public int deleteCategory(int parseInt) {
+//        entityManager.getTransaction().begin();
+//        Category category = entityManager.find(Category.class, parseInt);
+//
+//        entityManager.remove(category);
+//        entityManager.getTransaction().commit();
+//        if(entityManager.contains(category)){
+//            return 0;
+//        }else{
+//            return 1;
+//        }
+//
+//    }
 }
