@@ -96,9 +96,10 @@
             </div>
             <div class="row tm-edit-product-row">
               <div class="col-xl-6 col-lg-6 col-md-12">
-                <form action="ShowProducts" method="post" class="tm-edit-product-form" method="post"
+                <form action="EditProducts" method="post" class="tm-edit-product-form" method="post"
                       enctype="multipart/form-data">
                   <div class="form-group mb-3">
+                      <input type="hidden" id="id" name="id" value="${product.id}">
                     <label
                       for="name"
                       >Product Name
@@ -118,6 +119,7 @@
                     >
                     <textarea
                             id="desc"
+                            name="desc"
                       class="form-control validate tm-small"
                       rows="5"
                       required
@@ -132,7 +134,7 @@
                           <input
                             id="price"
                             name="price"
-                            type="text"
+                            type="number"
                             value="${product.price}"
                             class="form-control validate"
                             data-large-mode="true"
@@ -146,21 +148,21 @@
                           <input
                             id="stock"
                             name="stock"
-                            type="text"
+                            type="number"
                             value="${product.quantity}"
                             class="form-control validate"
                           />
                         </div>
                   </div>
                   
-                </form></div>
+               </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4" id="back"
                 style="position:absolute;top:30px;right:50px;">
                 <div style="position:absolute;top:30px;right:50px; background-color: #f8694a;height: 200px;width: 300px;">
                 <%--                  <label style="display: block;"><b>Product Image</b></label>--%>
                 <img id="productImageDisplay" src="${pageContext.request.contextPath}/file/${product.image}" height="300" width="300"/>
                 <input type="file" onchange="loadFile(event)" id="file" name="file" size="60"
-                required>
+                >
                 <!-- To change the product image based on the uploaded image -->
                 <script>
                 var loadFile = function (event) {

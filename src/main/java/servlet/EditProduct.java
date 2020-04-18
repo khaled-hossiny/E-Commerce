@@ -126,16 +126,18 @@ public class EditProduct extends HttpServlet {
                     "There was an error: " + ex.getMessage());
         }
 
-        product.setName(name);
-        product.setQuantity(Integer.parseInt(stock));
-        product.setPrice(Integer.parseInt(price));
-        product.setDescription(desc);
+        System.out.println("stock is "+request.getParameter("stock"));
+        System.out.println("price is "+request.getParameter("price"));
+        product.setName(request.getParameter("name"));
+        product.setQuantity(Integer.parseInt(request.getParameter("stock")));
+        product.setPrice(Integer.parseInt(request.getParameter("price")));
+        product.setDescription(request.getParameter("desc"));
         product.setImage(filePath);
 
         adminService.editProduct(Integer.parseInt(productId),product);
         request.setAttribute("isSucceed", "sucess");
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("edit-product.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ShowProducts");
         dispatcher.forward(request, response);
     }
 }

@@ -28,9 +28,8 @@ import java.util.List;
 public class AddProduct extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    // location to store file uploaded
-    private static final String UPLOAD_DIRECTORY = PropertiesUtil.uploadsPath();
-
+    private static final String UPLOAD_DIRECTORY = "upload";
+    boolean check=true;
     // upload settings
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
@@ -46,8 +45,7 @@ public class AddProduct extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        // configures upload settings
+// configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();
         // sets memory threshold - beyond which files are stored in disk
         factory.setSizeThreshold(MEMORY_THRESHOLD);
@@ -121,9 +119,20 @@ public class AddProduct extends HttpServlet {
         product.setPrice(Integer.parseInt(price));
         product.setDescription(desc);
         product.setImage(filePath);
-        adminService.addProduct(product);
+        List<Product> products=adminService.getAllProducts();
 
-        request.getRequestDispatcher("ShowProducts").include(request, response);
+        for (int i=0;i<products.size();i++){
+            if(products.get(i).getName().equals(name)){
+                check=false;
+            }
+        }
+        if(check==true) {
+            adminService.addProduct(product);
+
+            request.getRequestDispatcher("ShowProducts").include(request, response);
+        }else{
+            request.getRequestDispatcher("ErrorPage.html").include(request, response);
+        }
 
 
 
