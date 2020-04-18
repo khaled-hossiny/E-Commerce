@@ -34,7 +34,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-12">
-                <form action="index.html" method="post" class="tm-login-form">
+                <form method="post" class="tm-login-form" action="login">
                   <div class="form-group">
                     <label for="username">Username</label>
                     <input

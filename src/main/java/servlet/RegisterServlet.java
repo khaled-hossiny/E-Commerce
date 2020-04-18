@@ -1,4 +1,5 @@
 package servlet;
+import entity.Buyer;
 import entity.User;
 import exceptions.InvalidLoginException;
 import service.UserServiceImp;
@@ -12,43 +13,47 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
-    private UserServiceImp loginDao;
+@WebServlet("/register")
+public class RegisterServlet extends HttpServlet {
+    private UserServiceImp Dao;
 
     public void init() {
-        loginDao = new UserServiceImp();
+        Dao = new UserServiceImp();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Register.jsp");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            authenticate(request, response);
+            register(request, response);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    private void authenticate(HttpServletRequest request, HttpServletResponse response)
-            throws InvalidLoginException, ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
 
-        User user = loginDao.login(username, password);
-        if(user != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", username);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("accounts.jsp");
-            dispatcher.forward(request, response);
-        }
-        else {
+
+    private void register(HttpServletRequest request, HttpServletResponse response)
+            throws  ServletException, IOException {
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        String address = request.getParameter("address");
+        String password = request.getParameter("password");
+        Buyer buyer = new Buyer(address,firstName, lastName, email, password) ;
+        User user = Dao.addUser(buyer);
+        if(user != null ) {
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+       }
+        else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
             dispatcher.forward(request, response);
         }
 

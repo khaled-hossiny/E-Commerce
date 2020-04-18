@@ -14,6 +14,7 @@ public abstract class User {
     private String password;
 
 
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
