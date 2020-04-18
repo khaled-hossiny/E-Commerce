@@ -19,6 +19,8 @@ import java.util.List;
 import entity.*;
 
 public class AdminServiceImpl implements AdminService {
+
+
     private EntityManager entityManager;
 
     {
@@ -50,7 +52,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void editProduct(long id, Product product) {
+    public void editProduct(int id, Product product) {
         entityManager.getTransaction().begin();
         Product prod = entityManager.find(Product.class, id);
         prod.setPrice(product.getPrice());
@@ -59,6 +61,7 @@ public class AdminServiceImpl implements AdminService {
         prod.setQuantity(product.getQuantity());
         prod.setCategories(product.getCategories());
         prod.setCartProductsById(product.getCartProductsById());
+        prod.setImage(product.getImage());
         entityManager.merge(prod);
         entityManager.getTransaction().commit();
 
@@ -66,16 +69,24 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteProduct(long id) {
+    public int deleteProduct(int id) {
         entityManager.getTransaction().begin();
         Product product = entityManager.find(Product.class, id);
         entityManager.remove(product);
         entityManager.getTransaction().commit();
+        if(entityManager.contains(product)){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
     @Override
     public User viewCustomerProfile(int userId) {
         User user = entityManager.find(User.class, userId);
         return user;
+    }
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 }

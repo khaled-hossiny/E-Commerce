@@ -12,6 +12,7 @@ public class Product {
     private String description;
     private int quantity;
     private int price;
+    private String image;
     private Set<CartProduct> cartProductsById = new HashSet<>();
     private Set<Category> categories = new HashSet<>();
     private Set<UserBuyProduct> userBuyProductsById = new HashSet<>();
@@ -65,6 +66,15 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+    @Basic
+    @Column(name = "image", nullable = false, length = 100)
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
