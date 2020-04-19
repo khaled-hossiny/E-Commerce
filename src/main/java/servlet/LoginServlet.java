@@ -1,5 +1,4 @@
 package servlet;
-import entity.Buyer;
 import entity.User;
 import exceptions.InvalidLoginException;
 import service.UserServiceImp;
@@ -28,18 +27,12 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        User user = new Buyer("address", "firstName", "lastName", "email", "password");
-//        HttpSession session = request.getSession();
-//        session.setAttribute("user", user);
-//        System.out.println("servlet " + session.getAttribute("user"));
-//        response.sendRedirect("ShowProducts");
-        /*RequestDispatcher dispatcher = request.getRequestDispatcher("products.jsp");
-        dispatcher.forward(request, response);*/
         try {
             authenticate(request, response);
-        } catch (InvalidLoginException | IOException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             response.sendRedirect("login.jsp");
+            e.printStackTrace();
         }
     }
 
@@ -49,8 +42,17 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         User user = loginDao.login(username, password);
-        HttpSession session = request.getSession();
-        session.setAttribute("user", user);
-        response.sendRedirect("accounts.jsp");
+        if(user != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("user", username);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("accounts.jsp");
+            dispatcher.forward(request, response);
+        }
+        else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+        }
+
+
     }
 }

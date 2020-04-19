@@ -3,20 +3,18 @@ package service;
 
 import entity.Product;
 import entity.User;
-import exceptions.ProductAlreadyExistsException;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.exception.ConstraintViolationException;
 import utility.HibernateUtil;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import entity.*;
 
@@ -54,7 +52,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void editProduct(int id, Product product) throws ProductAlreadyExistsException {
+    public void editProduct(int id, Product product) {
         entityManager.getTransaction().begin();
         Product prod = entityManager.find(Product.class, id);
         prod.setPrice(product.getPrice());
@@ -64,14 +62,8 @@ public class AdminServiceImpl implements AdminService {
         prod.setCategories(product.getCategories());
         prod.setCartProductsById(product.getCartProductsById());
         prod.setImage(product.getImage());
-        try {
-            entityManager.merge(prod);
-            entityManager.getTransaction().commit();
-        }
-        catch (RollbackException e) {
-            e.printStackTrace();
-            throw new ProductAlreadyExistsException("product already exists");
-        }
+        entityManager.merge(prod);
+        entityManager.getTransaction().commit();
 
 
     }

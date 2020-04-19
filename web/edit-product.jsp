@@ -104,7 +104,7 @@
                 </div>
                 <div class="row tm-edit-product-row">
                     <div class="col-xl-6 col-lg-6 col-md-12">
-                        <form action="EditProducts" method="post" class="tm-edit-product-form"
+                        <form action="EditProducts" method="post" class="tm-edit-product-form" method="post"
                               enctype="multipart/form-data" >
                             <div class="form-group mb-3">
                                 <input type="hidden" id="id" name="id" value="${product.id}">
@@ -194,7 +194,7 @@
                         <div style="position:absolute;top:30px;right:50px; background-color: #f8694a;height: 200px;width: 300px;">
                             <%--                  <label style="display: block;"><b>Product Image</b></label>--%>
                             <img id="productImageDisplay" src="${pageContext.request.contextPath}/file/${product.image}" height="300" width="300"/>
-                            <input type="file" onchange="loadFile(event)" id="file" name="file" size="60"
+                            <input type="file" onchange="loadFile(event)" id="uploadFile" name="uploadFile" size="60"
                                    value="${product.image}">
                             <!-- To change the product image based on the uploaded image -->
                             <script>
@@ -206,7 +206,7 @@
                                     $('#img').val(output.src);
                                 };
                             </script>
-
+                            <input type="hidden" id="img" name="img" value="${product.image}">
 
                             <%--              <input--%>
                             <%--                      id="imageBtn"--%>

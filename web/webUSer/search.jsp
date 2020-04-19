@@ -530,7 +530,7 @@
 							<ul class="custom-menu">
 								<li><a href="search.jsp">Home</a></li>
 								<li><a href="products.html">Products</a></li>
-								<li><a href="product-page.html">Product Details</a></li>
+								<li><a href="product-page.jsp">Product Details</a></li>
 								<li><a href="checkout.html">Checkout</a></li>
 							</ul>
 						</li>

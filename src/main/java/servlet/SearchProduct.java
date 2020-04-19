@@ -3,6 +3,7 @@ package servlet;
 import entity.Product;
 import service.UserServiceImp;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,9 @@ public class SearchProduct extends HttpServlet {
         for(Product pro : productList) {
             System.out.println(pro.getName());
         }
+        req.setAttribute("list", productList);
+        RequestDispatcher ry = req.getRequestDispatcher("products.jsp");
+        ry.forward(req, resp);
 
     }
 }
