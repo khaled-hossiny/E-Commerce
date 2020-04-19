@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html lang="en">
 
 <head>
@@ -80,7 +81,7 @@
 					<!-- Logo -->
 					<div class="header-logo">
 						<a class="logo" href="#">
-							<img src="./img/logo.png" alt="">
+							<img src="img/logo.png" alt="">
 						</a>
 					</div>
 					<!-- /Logo -->
@@ -137,7 +138,7 @@
 									<div class="shopping-cart-list">
 										<div class="product product-widget">
 											<div class="product-thumb">
-												<img src="./img/thumb-product01.jpg" alt="">
+												<img src="img/thumb-product01.jpg" alt="">
 											</div>
 											<div class="product-body">
 												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
@@ -147,7 +148,7 @@
 										</div>
 										<div class="product product-widget">
 											<div class="product-thumb">
-												<img src="./img/thumb-product01.jpg" alt="">
+												<img src="img/thumb-product01.jpg" alt="">
 											</div>
 											<div class="product-body">
 												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
@@ -232,7 +233,7 @@
 									<div class="col-md-12">
 										<hr>
 										<a class="banner banner-1" href="#">
-											<img src="./img/banner05.jpg" alt="">
+											<img src="img/banner05.jpg" alt="">
 											<div class="banner-caption text-center">
 												<h2 class="white-color">NEW COLLECTION</h2>
 												<h3 class="white-color font-weak">HOT DEAL</h3>
@@ -291,7 +292,7 @@
 									</div>
 									<div class="col-md-4 hidden-sm hidden-xs">
 										<a class="banner banner-2" href="#">
-											<img src="./img/banner04.jpg" alt="">
+											<img src="img/banner04.jpg" alt="">
 											<div class="banner-caption">
 												<h3 class="white-color">NEW<br>COLLECTION</h3>
 											</div>
@@ -429,7 +430,7 @@
 									<div class="col-md-12">
 										<hr>
 										<a class="banner banner-1" href="#">
-											<img src="./img/banner05.jpg" alt="">
+											<img src="img/banner05.jpg" alt="">
 											<div class="banner-caption text-center">
 												<h2 class="white-color">NEW COLLECTION</h2>
 												<h3 class="white-color font-weak">HOT DEAL</h3>
@@ -445,7 +446,7 @@
 									<div class="col-md-3">
 										<div class="hidden-sm hidden-xs">
 											<a class="banner banner-1" href="#">
-												<img src="./img/banner06.jpg" alt="">
+												<img src="img/banner06.jpg" alt="">
 												<div class="banner-caption text-center">
 													<h3 class="white-color text-uppercase">Women’s</h3>
 												</div>
@@ -465,7 +466,7 @@
 									<div class="col-md-3">
 										<div class="hidden-sm hidden-xs">
 											<a class="banner banner-1" href="#">
-												<img src="./img/banner07.jpg" alt="">
+												<img src="img/banner07.jpg" alt="">
 												<div class="banner-caption text-center">
 													<h3 class="white-color text-uppercase">Men’s</h3>
 												</div>
@@ -485,7 +486,7 @@
 									<div class="col-md-3">
 										<div class="hidden-sm hidden-xs">
 											<a class="banner banner-1" href="#">
-												<img src="./img/banner08.jpg" alt="">
+												<img src="img/banner08.jpg" alt="">
 												<div class="banner-caption text-center">
 													<h3 class="white-color text-uppercase">Accessories</h3>
 												</div>
@@ -505,7 +506,7 @@
 									<div class="col-md-3">
 										<div class="hidden-sm hidden-xs">
 											<a class="banner banner-1" href="#">
-												<img src="./img/banner09.jpg" alt="">
+												<img src="img/banner09.jpg" alt="">
 												<div class="banner-caption text-center">
 													<h3 class="white-color text-uppercase">Bags</h3>
 												</div>
@@ -530,7 +531,7 @@
 							<ul class="custom-menu">
 								<li><a href="search.jsp">Home</a></li>
 								<li><a href="products.html">Products</a></li>
-								<li><a href="product-page.html">Product Details</a></li>
+								<li><a href="product-page.jsp">Product Details</a></li>
 								<li><a href="checkout.html">Checkout</a></li>
 							</ul>
 						</li>
@@ -567,30 +568,30 @@
 					<div class="col-md-6">
 						<div id="product-main-view">
 							<div class="product-view">
-								<img src="./img/main-product01.jpg" alt="">
+								<img src="img/main-product01.jpg" alt="">
 							</div>
 							<div class="product-view">
-								<img src="./img/main-product02.jpg" alt="">
+								<img src="img/main-product02.jpg" alt="">
 							</div>
 							<div class="product-view">
-								<img src="./img/main-product03.jpg" alt="">
+								<img src="img/main-product03.jpg" alt="">
 							</div>
 							<div class="product-view">
-								<img src="./img/main-product04.jpg" alt="">
+								<img src="img/main-product04.jpg" alt="">
 							</div>
 						</div>
 						<div id="product-view">
 							<div class="product-view">
-								<img src="./img/thumb-product01.jpg" alt="">
+								<img src="img/thumb-product01.jpg" alt="">
 							</div>
 							<div class="product-view">
-								<img src="./img/thumb-product02.jpg" alt="">
+								<img src="img/thumb-product02.jpg" alt="">
 							</div>
 							<div class="product-view">
-								<img src="./img/thumb-product03.jpg" alt="">
+								<img src="img/thumb-product03.jpg" alt="">
 							</div>
 							<div class="product-view">
-								<img src="./img/thumb-product04.jpg" alt="">
+								<img src="img/thumb-product04.jpg" alt="">
 							</div>
 						</div>
 					</div>
@@ -790,7 +791,7 @@
 					<div class="product product-single">
 						<div class="product-thumb">
 							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="./img/product04.jpg" alt="">
+							<img src="img/product04.jpg" alt="">
 						</div>
 						<div class="product-body">
 							<h3 class="product-price">$32.50</h3>
@@ -820,7 +821,7 @@
 								<span>New</span>
 							</div>
 							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="./img/product03.jpg" alt="">
+							<img src="img/product03.jpg" alt="">
 						</div>
 						<div class="product-body">
 							<h3 class="product-price">$32.50</h3>
@@ -850,7 +851,7 @@
 								<span class="sale">-20%</span>
 							</div>
 							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="./img/product02.jpg" alt="">
+							<img src="img/product02.jpg" alt="">
 						</div>
 						<div class="product-body">
 							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
@@ -881,7 +882,7 @@
 								<span class="sale">-20%</span>
 							</div>
 							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="./img/product01.jpg" alt="">
+							<img src="img/product01.jpg" alt="">
 						</div>
 						<div class="product-body">
 							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
@@ -922,7 +923,7 @@
 						<!-- footer logo -->
 						<div class="footer-logo">
 							<a class="logo" href="#">
-		            <img src="./img/logo.png" alt="">
+		            <img src="img/logo.png" alt="">
 		          </a>
 						</div>
 						<!-- /footer logo -->
