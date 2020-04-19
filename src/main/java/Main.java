@@ -78,7 +78,7 @@ public class Main {
 //
 //        entityManager.getTransaction().commit();
         entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
-        createBuyer();
+        //createBuyer();
         createProduct1();
         createProduct2();
 
@@ -93,28 +93,28 @@ public class Main {
 //        }
 //        System.out.println("");
     }
-
-    public static Buyer createBuyer() {
-        entityManager.getTransaction().begin();
-        Buyer user = new Buyer();
-        user.setFirstName("Khaled");
-        user.setLastName("ElHossiny");
-        user.setAddress("New Cairo");
-        user.setEmail("khaled@gmail.com");
-        user.setPassword("password");
-        CreditCard creditCard = new CreditCard();
-        creditCard.setBalance(10000.0);
-        user.setCreditCardById(creditCard);
-        creditCard.setBuyer(user);
-        ShoppingCart cart = new ShoppingCart();
-        user.setShoppingCartsById(cart);
-        cart.setBuyerByBuyerId(user);
-        entityManager.persist(user);
-        entityManager.persist(cart);
-        entityManager.persist(creditCard);
-        entityManager.getTransaction().commit();
-        return user;
-    }
+//
+//    public static Buyer createBuyer() {
+//        entityManager.getTransaction().begin();
+//        Buyer user = new Buyer();
+//        user.setFirstName("Khaled");
+//        user.setLastName("ElHossiny");
+//        user.setAddress("New Cairo");
+//        user.setEmail("khaled@gmail.com");
+//        user.setPassword("password");
+//        CreditCard creditCard = new CreditCard();
+//        creditCard.setBalance(10000.0);
+//        user.setCreditCardById(creditCard);
+//        creditCard.setBuyer(user);
+//        ShoppingCart cart = new ShoppingCart();
+//        user.setShoppingCartsById(cart);
+//        cart.setBuyerByBuyerId(user);
+//        entityManager.persist(user);
+//        entityManager.persist(cart);
+//        entityManager.persist(creditCard);
+//        entityManager.getTransaction().commit();
+//        return user;
+//    }
 
     public static Product createProduct1() {
         entityManager.getTransaction().begin();
