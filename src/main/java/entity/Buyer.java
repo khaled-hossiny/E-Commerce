@@ -14,8 +14,14 @@ public class Buyer extends User {
     private ShoppingCart shoppingCartsById;
     private Set<UserBuyProduct> userBuyProductsById = new HashSet<>();
 
+
+
     public Buyer(String address, String firstName, String lastName, String email, String password) {
         super(address,firstName ,lastName , email, password);
+    }
+
+    public Buyer() {
+
     }
 
 
