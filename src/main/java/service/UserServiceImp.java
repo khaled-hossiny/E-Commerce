@@ -3,7 +3,6 @@ package service;
 import entity.Product;
 import entity.User;
 import exceptions.InvalidLoginException;
-import org.hibernate.Session;
 import utility.HibernateUtil;
 
 import javax.persistence.EntityManager;
@@ -93,5 +92,15 @@ public class UserServiceImp implements UserService {
             return  result.get(0) ;
 
 
+    }
+
+    @Override
+    public List<Product> searchProduct(String searchName) {
+        Query query = entityManager.createQuery("SELECT e FROM Product e where e.name LIKE :searchName " );
+        query.setParameter("searchName" , "%"+searchName+"%");
+        System.out.println("the serchName is " +searchName);
+        List<Product> resultList = query.getResultList();
+        //resultList.forEach(System.out::println);
+        return resultList ;
     }
 }

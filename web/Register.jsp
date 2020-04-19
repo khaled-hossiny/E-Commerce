@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <label for="firstName">First Name</label>
                                 <input
-                                        name="firstname"
+                                        name="firstName"
                                         type="text"
                                         class="form-control validate"
                                         id="firstName"
@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label for="lastName">Last Name</label>
                                 <input
-                                        name="lastname"
+                                        name="lastName"
                                         type="text"
                                         class="form-control validate"
                                         id="lastName"

@@ -9,15 +9,19 @@ import java.util.Set;
 @Entity
 public class Buyer extends User {
 
-    public Buyer() {
-    }
 
     private CreditCard creditCardById;
     private ShoppingCart shoppingCartsById;
     private Set<UserBuyProduct> userBuyProductsById = new HashSet<>();
 
+
+
     public Buyer(String address, String firstName, String lastName, String email, String password) {
-        super();
+        super(address,firstName ,lastName , email, password);
+    }
+
+    public Buyer() {
+
     }
 
 

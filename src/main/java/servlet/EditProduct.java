@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import entity.Category;
 import entity.Product;
+import exceptions.ProductAlreadyExistsException;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -24,6 +25,7 @@ import service.AdminServiceImpl;
 import utility.PropertiesUtil;
 
 import java.io.PrintWriter;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -56,7 +58,6 @@ public class EditProduct extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String productId = request.getParameter("id");
         // configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();
         // sets memory threshold - beyond which files are stored in disk
@@ -85,6 +86,7 @@ public class EditProduct extends HttpServlet {
             uploadDir.mkdir();
         }
         String name = "", desc = "", price = "", stock = "", filePath = "";
+        int id = 0;
 
         try {
             // parses the request's content to extract file data
@@ -114,6 +116,9 @@ public class EditProduct extends HttpServlet {
                             case "stock":
                                 stock = new String(item.get());
                                 break;
+                            case "id":
+                                id = Integer.parseInt(new String(item.get()));
+                                break;
                             default:
                                 price = new String(item.get());
                         }
@@ -124,29 +129,17 @@ public class EditProduct extends HttpServlet {
             request.setAttribute("message",
                     "There was an error: " + ex.getMessage());
         }
-        System.out.println("Imaggggggggggg"+request.getParameter("img"));
         Product product = new Product();
-        product.setName(request.getParameter("name"));
-        product.setQuantity(Integer.parseInt(request.getParameter("stock")));
-        product.setPrice(Integer.parseInt(request.getParameter("price")));
-        product.setDescription(request.getParameter("desc"));
-        product.setImage(request.getParameter("img"));
-        System.out.println(filePath);
-        List<Product> products=adminService.getAllProducts();
-
-
-        for (int i = 0; i<products.size(); i++){
-            if(products.get(i).getName().equals(name)){
-                check=false;
-                break;
-            }
-        }
-        if(check==true) {
-            adminService.editProduct(Integer.parseInt(productId),product);
-
-            //request.getRequestDispatcher("ShowProducts").include(request, response);
+        product.setName(name);
+        product.setQuantity(Integer.parseInt(stock));
+        product.setPrice(Integer.parseInt(price));
+        product.setDescription(desc);
+        product.setImage(filePath);
+        try {
+            adminService.editProduct(id, product);
             response.sendRedirect("ShowProducts");
-        }else{
+        } catch (ProductAlreadyExistsException e) {
+            e.printStackTrace();
             request.getRequestDispatcher("ErrorPage.html").include(request, response);
         }
 
