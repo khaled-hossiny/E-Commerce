@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class RemoveProduct extends HttpServlet {
+public class RemoveCategory extends HttpServlet {
     AdminServiceImpl adminService=new AdminServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-      //  super.doGet(request, resp);
+        //  super.doGet(request, resp);
 
-        String productId = request.getParameter("id");
-       int success= adminService.deleteProduct(Integer.parseInt(productId));
-       if(success==1) {
-           request.setAttribute("Success","success");
-           RequestDispatcher dispatcher = request.getRequestDispatcher("ShowProducts");
-           dispatcher.include(request, resp);
-       }
+//        String categoryId = request.getParameter("id");
+//      //  int success= adminService.deleteCategory(Integer.parseInt(categoryId));
+//        if(success==1) {
+//            request.setAttribute("Success","success");
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("ShowProducts");
+//            dispatcher.include(request, resp);
+       // }
     }
 
     @Override

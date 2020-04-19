@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class BuyerServiceImpl implements BuyerService{
+public class BuyerServiceImpl extends UserServiceImp implements BuyerService{
     private EntityManager entityManager;
 
     {
