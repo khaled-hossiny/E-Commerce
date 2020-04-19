@@ -36,7 +36,7 @@
               <div class="col-12">
                 <form method="post" class="tm-login-form" action="login">
                   <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username">Email</label>
                     <input
                       name="username"
                       type="text"

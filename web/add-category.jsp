@@ -114,7 +114,7 @@
                                 <input
                                         id="name"
                                         name="name"
-                                        pattern="[a-zA-Z0-9]+" minlength="2" maxlength="50"
+                                        pattern="^$|^\S+.*" minlength="2" maxlength="50"
                                         type="text"
                                         class="form-control validate"
                                         required
@@ -131,7 +131,7 @@
                                         id="desc"
                                         class="form-control validate"
                                         rows="3"
-
+                                        pattern="^$|^\S+.*"
                                         required
                                 ></textarea>
                             </div>
