@@ -14,4 +14,6 @@ public interface UserService {
     void deleteUser(int userId);
 
     User login(String email, String password) throws InvalidLoginException;
+
+    List<Product> searchProduct (String searchName);
 }
