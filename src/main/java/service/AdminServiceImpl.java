@@ -3,29 +3,23 @@ package service;
 
 import entity.Product;
 import entity.User;
+import exceptions.ProductAlreadyExistsException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import utility.HibernateUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import entity.*;
 
-public class AdminServiceImpl implements AdminService {
+@ApplicationScoped
+public class AdminServiceImpl extends UserServiceImp implements AdminService {
 
-
-    private EntityManager entityManager;
-
-    {
-        entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
-    }
 
     @Override
     public int addProduct(Product product) {
@@ -36,23 +30,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Product getProductById(int productId) {
-        Product product = entityManager.find(Product.class, productId);
-        return product;
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-        Root<Product> root = cq.from(Product.class);
-        cq.select(root);
-        TypedQuery<Product> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Override
-    public void editProduct(int id, Product product) {
+    public void editProduct(int id, Product product) throws ProductAlreadyExistsException {
         entityManager.getTransaction().begin();
         Product prod = entityManager.find(Product.class, id);
         prod.setPrice(product.getPrice());
@@ -61,9 +39,16 @@ public class AdminServiceImpl implements AdminService {
         prod.setQuantity(product.getQuantity());
         prod.setCategories(product.getCategories());
         prod.setCartProductsById(product.getCartProductsById());
-        prod.setImage(product.getImage());
-        entityManager.merge(prod);
-        entityManager.getTransaction().commit();
+        if(product.getImage() != null)
+            prod.setImage(product.getImage());
+        try {
+            entityManager.persist(prod);
+            entityManager.getTransaction().commit();
+        }
+        catch (RollbackException e) {
+            e.printStackTrace();
+            throw new ProductAlreadyExistsException("product already exists");
+        }
 
 
     }
@@ -85,17 +70,6 @@ public class AdminServiceImpl implements AdminService {
     public User viewCustomerProfile(int userId) {
         User user = entityManager.find(User.class, userId);
         return user;
-    }
-
-    @Override
-    public List<Category> getAllCategory() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-        Root<Category> root = cq.from(Category.class);
-        cq.select(root);
-        TypedQuery<Category> query = entityManager.createQuery(cq);
-        System.out.println("size is "+query.getResultList().size());
-        return query.getResultList();
     }
 
     @Override

@@ -4,11 +4,12 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "credit_card", schema = "ecommerce")
-public class CreditCard {
+public class CreditCard implements Serializable {
     private Double balance;
     private Integer buyerId;
     private Buyer buyer;

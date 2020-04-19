@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "cart_product", schema = "ecommerce")
@@ -9,7 +10,7 @@ import javax.persistence.*;
                 joinColumns = @JoinColumn(name = "product_id")),
         @AssociationOverride(name = "pk.cart",
                 joinColumns = @JoinColumn(name = "cart_id")) })
-public class CartProduct {
+public class CartProduct implements Serializable {
     private Integer quantity;
     private CartProductPK pk = new CartProductPK();
 

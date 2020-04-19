@@ -1,12 +1,13 @@
 package entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "shopping_cart", schema = "ecommerce")
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
     private Integer id;
     private int totalCost;
     private Set<CartProduct> cartProductsById = new HashSet<>();
@@ -23,7 +24,7 @@ public class ShoppingCart {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "pk.cart")
+    @OneToMany(mappedBy = "pk.cart", cascade = CascadeType.MERGE)
     public Set<CartProduct> getCartProductsById() {
         return cartProductsById;
     }

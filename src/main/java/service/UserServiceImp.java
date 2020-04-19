@@ -1,10 +1,10 @@
 package service;
 
-import entity.Product;
-import entity.User;
+import entity.*;
 import exceptions.InvalidLoginException;
 import utility.HibernateUtil;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -13,26 +13,50 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-
+@ApplicationScoped
 public class UserServiceImp implements UserService {
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     {
         entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
     }
 
     @Override
-    public User addUser(User user) {
+    public Buyer addUser(Buyer buyer) {
+        CreditCard creditCard = new CreditCard();
+        creditCard.setBalance(10000.0);
+        creditCard.setBuyer(buyer);
+        buyer.setCreditCardById(creditCard);
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setBuyerByBuyerId(buyer);
         entityManager.getTransaction().begin();
-        entityManager.persist(user);
+        entityManager.persist(creditCard);
+        entityManager.persist(shoppingCart);
+        entityManager.persist(buyer);
         entityManager.getTransaction().commit();
-        return user;
+        return buyer;
     }
 
     @Override
     public User getUserById(int userId) {
         User user = entityManager.find(User.class, userId);
         return user;
+    }
+
+    @Override
+    public Product getProductById(int productId) {
+        Product product = entityManager.find(Product.class, productId);
+        return product;
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+        Root<Product> root = cq.from(Product.class);
+        cq.select(root);
+        TypedQuery<Product> query = entityManager.createQuery(cq);
+        return query.getResultList();
     }
 
 
@@ -44,6 +68,17 @@ public class UserServiceImp implements UserService {
         Root<User> root = cq.from(User.class);
         cq.select(root);
         TypedQuery<User> query = entityManager.createQuery(cq);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Category> getAllCategory() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+        Root<Category> root = cq.from(Category.class);
+        cq.select(root);
+        TypedQuery<Category> query = entityManager.createQuery(cq);
+        System.out.println("size is "+query.getResultList().size());
         return query.getResultList();
     }
 
@@ -90,17 +125,5 @@ public class UserServiceImp implements UserService {
         }
         else
             return  result.get(0) ;
-
-
-    }
-
-    @Override
-    public List<Product> searchProduct(String searchName) {
-        Query query = entityManager.createQuery("SELECT e FROM Product e where e.name LIKE :searchName " );
-        query.setParameter("searchName" , "%"+searchName+"%");
-        System.out.println("the serchName is " +searchName);
-        List<Product> resultList = query.getResultList();
-        //resultList.forEach(System.out::println);
-        return resultList ;
     }
 }

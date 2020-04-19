@@ -40,54 +40,55 @@
 
 <body>
 <!-- HEADER -->
+<!-- BREADCRUMB -->
 <jsp:include page="/nav"/>
+
 
 <!-- section -->
 <div class="section">
     <!-- container -->
     <div class="container">
-        <!-- row -->
-        <div class="row">
-            <!--  Product Details -->
-            <div class="product product-details clearfix">
-                <div class="col-md-6">
-                    <div id="product-main-view">
-                        <div class="product-view">
-                            <img src="${pageContext.request.contextPath}/file/${product.image}" alt="">
+        <c:forEach items="${cartProducts}" var="cartProduct">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="product product-single">
+                        <div class="product-thumb">
+                            <img src="${pageContext.request.contextPath}/file/${cartProduct.pk.product.image}"
+                                 alt="">
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="product-body">
-                        <h2 class="product-name">${product.name}</h2>
-                        <h3 class="product-price">$${product.price}</h3>
-                        <p><strong>Availability:</strong> In Stock</p>
-                        <p>${product.description}</p>
-
-                        <form action="add" method="post">
+                        <div class="product-body">
+                            <h3 class="product-price">$${cartProduct.pk.product.price} <span
+                                    class="qty">x${cartProduct.quantity}</span></h3>
+                            <h2 class="product-name"><a href="#">${cartProduct.pk.product.name}</a>
+                            </h2>
+                        </div>
+                        <form action="remove" method="post">
                             <div class="product-btns">
                                 <div class="qty-input">
-                                    <input type="hidden" value="${product.id}" name="id">
+                                    <input type="hidden" value="${cartProduct.pk.product.id}" name="id">
                                     <span class="text-uppercase">QTY: </span>
                                     <input class="input" type="number" name="quantity">
                                 </div>
-                                <button class="primary-btn add-to-cart" type="submit"><i
-                                        class="fa fa-shopping-cart"></i> Add to Cart
-                                </button>
+                                <button class="cancel-btn" type="submit"><i class="fa fa-trash"></i></button>
                             </div>
                         </form>
                     </div>
                 </div>
-
             </div>
-            <!-- /Product Details -->
-        </div>
-        <!-- /row -->
+            <!-- /Product Single -->
+        </c:forEach>
+        <!-- ASIDE -->
+        <!-- /ASIDE -->
+
+        <!-- /MAIN -->
     </div>
-    <!-- /container -->
+    <!-- /row -->
+</div>
+<!-- /container -->
 </div>
 <!-- /section -->
 
+<!-- FOOTER -->
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
