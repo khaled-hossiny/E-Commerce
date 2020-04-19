@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         System.out.println("servlet " + session.getAttribute("user"));
-        response.sendRedirect("products.jsp");
+        response.sendRedirect("ShowProducts");
         /*RequestDispatcher dispatcher = request.getRequestDispatcher("products.jsp");
         dispatcher.forward(request, response);*/
         /*try {
