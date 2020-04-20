@@ -27,12 +27,12 @@ import utility.PropertiesUtil;
 
 import java.io.PrintWriter;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+
 @MultipartConfig
 public class EditProduct extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    Set<Category> categorySet = new HashSet<>();
 
     // location to store file uploaded
     private static final String UPLOAD_DIRECTORY = PropertiesUtil.uploadsPath();
@@ -43,6 +43,7 @@ public class EditProduct extends HttpServlet {
     private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
     @Inject
     AdminServiceImpl adminService;
+    List<String>selectedStudentIds=new ArrayList<>();
     private boolean check=true;
 
     @Override
@@ -121,6 +122,9 @@ public class EditProduct extends HttpServlet {
                             case "id":
                                 id = Integer.parseInt(new String(item.get()));
                                 break;
+                            case "category":
+                                selectedStudentIds.add(new String(item.get()));
+                                        break;
                             default:
                                 price = new String(item.get());
                         }
@@ -136,10 +140,18 @@ public class EditProduct extends HttpServlet {
         product.setQuantity(Integer.parseInt(stock));
         product.setPrice(Integer.parseInt(price));
         product.setDescription(desc);
+
+        for(int i=0;i<selectedStudentIds.size();i++) {
+            Category categoryChoose = new Category();
+            categoryChoose.setName(selectedStudentIds.get(i));
+            categorySet.add(categoryChoose);
+        }
+        System.out.println("category Size"+categorySet.size());
         if(!filePath.equals(UPLOAD_DIRECTORY + File.separator)) {
             product.setImage(filePath);
         }
         try {
+            product.setCategories(categorySet);
             adminService.editProduct(id, product);
             response.sendRedirect("ShowProducts");
         } catch (ProductAlreadyExistsException e) {

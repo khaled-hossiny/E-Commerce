@@ -11,6 +11,7 @@ public interface AdminService extends UserService{
     int addProduct(Product product);
     Product getProductById(int productId);
     List<Product> getAllProducts();
+    List<Category> getAllCategories();
     void editProduct(int productId, Product product) throws ProductAlreadyExistsException;
     int deleteProduct(int productId);
     User viewCustomerProfile(int userId);
