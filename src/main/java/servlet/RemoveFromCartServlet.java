@@ -20,8 +20,9 @@ public class RemoveFromCartServlet extends HttpServlet {
 
     @Inject
     BuyerService buyerService;
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         int quantity = 1;
         if(req.getParameter("quantity") != null) {
@@ -35,6 +36,5 @@ public class RemoveFromCartServlet extends HttpServlet {
             e.printStackTrace();
         }
         resp.sendRedirect("home");
-
     }
 }
