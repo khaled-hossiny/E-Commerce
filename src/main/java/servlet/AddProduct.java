@@ -136,13 +136,16 @@ public class AddProduct extends HttpServlet {
         for (int i = 0; i < products.size(); i++) {
             if (products.get(i).getName().equals(name)) {
                 check = false;
+                System.out.println(name+"is"+products.get(i).getName());
                 break;
             }
         }
         if (check == true) {
             adminService.addProduct(product);
             product.setCategories(categorySet);
-            request.getRequestDispatcher("ShowProducts").include(request, response);
+            System.out.println(name);
+            //request.getRequestDispatcher("ShowProducts").include(request, response);
+            response.sendRedirect("ShowProducts");
         } else {
             request.getRequestDispatcher("ErrorPage.html").include(request, response);
         }
