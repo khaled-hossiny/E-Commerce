@@ -18,6 +18,10 @@ public class Buyer extends User {
         super(address,firstName ,lastName , email, password);
     }
 
+    public Buyer() {
+
+    }
+
 
     @OneToOne(mappedBy = "buyer")
     public CreditCard getCreditCardById() {

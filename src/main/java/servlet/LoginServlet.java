@@ -29,8 +29,9 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             authenticate(request, response);
-        } catch (Exception e) {
+        } catch (InvalidLoginException e) {
             // TODO Auto-generated catch block
+            response.sendRedirect("login.jsp");
             e.printStackTrace();
         }
     }
@@ -39,19 +40,9 @@ public class LoginServlet extends HttpServlet {
             throws InvalidLoginException, ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
         User user = loginDao.login(username, password);
-        if(user != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", username);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("accounts.jsp");
-            dispatcher.forward(request, response);
-        }
-        else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
-        }
-
-
+        HttpSession session = request.getSession();
+        session.setAttribute("user", user);
+        response.sendRedirect("accounts.jsp");
     }
 }
