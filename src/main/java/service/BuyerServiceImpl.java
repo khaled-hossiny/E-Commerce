@@ -58,17 +58,25 @@ public class BuyerServiceImpl extends UserServiceImp implements BuyerService {
         Product product = entityManager.find(Product.class, productId);
         entityManager.getTransaction().begin();
         ShoppingCart cart = buyer.getShoppingCartsById();
+        entityManager.merge(buyer);
+        entityManager.merge(cart);
         for (CartProduct cartProduct : cart.getCartProductsById()) {
             if (cartProduct.getProduct().equals(product)) {
                 int quantityInCart = cartProduct.getQuantity();
                 int updatedQuantity = quantityInCart - quantity;
                 if (updatedQuantity <= 0) {
-                    entityManager.remove(cartProduct);
+                    String hql = "delete from CartProduct where pk.product = :product and pk.cart = :cart";
+                    Query query = entityManager.createQuery(hql);
+                    query.setParameter("product", product);
+                    query.setParameter("cart", cart);
+                    query.executeUpdate();
                 } else {
                     cartProduct.setQuantity(updatedQuantity);
                     cart.calculateTotalCost();
+                    entityManager.merge(cartProduct);
                 }
                 entityManager.getTransaction().commit();
+                entityManager.refresh(buyer);
                 return cartProduct;
             }
         }
@@ -119,6 +127,7 @@ public class BuyerServiceImpl extends UserServiceImp implements BuyerService {
             return userBuyProduct;
         }).collect(Collectors.toSet());
         buyer.setUserBuyProductsById(purchases);
+        clearShoppingCart(buyer);
         buyer.getShoppingCartsById().getCartProductsById().clear();
         entityManager.getTransaction().commit();
         return purchases;
@@ -131,5 +140,13 @@ public class BuyerServiceImpl extends UserServiceImp implements BuyerService {
         System.out.println("the serchName is " + searchName);
         List<Product> resultList = query.getResultList();
         return resultList;
+    }
+
+    private void clearShoppingCart(Buyer buyer) {
+        ShoppingCart shoppingCart = buyer.getShoppingCartsById();
+        String hql = "delete from CartProduct where pk.cart = :cart";
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("cart", shoppingCart);
+        query.executeUpdate();
     }
 }
