@@ -1,4 +1,5 @@
 package servlet;
+
 import entity.Buyer;
 import entity.User;
 import exceptions.InvalidLoginException;
@@ -47,10 +48,12 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         User user = loginDao.login(username, password);
         HttpSession session = request.getSession();
-        if(user instanceof Buyer) {
-            buyerSession.setBuyer((Buyer) user);
-        }
         session.setAttribute("user", user);
-        response.sendRedirect("webUSer/home");
+        if (user instanceof Buyer) {
+            buyerSession.setBuyer((Buyer) user);
+            response.sendRedirect("webUSer/home");
+        } else {
+            response.sendRedirect("ShowUsers");
+        }
     }
 }

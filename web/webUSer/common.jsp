@@ -51,8 +51,7 @@
                         <h4>Balance : $${balance}</h4>
                         <ul class="custom-menu">
                             <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-                            <li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
-                            <li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
+                            <li><a href="../logout"><i class="fa fa-sign-out"></i> Sign out</a></li>
                         </ul>
                     </li>
                     <!-- /Account -->
@@ -66,7 +65,7 @@
                             </div>
                             <strong class="text-uppercase">My Cart:</strong>
                             <br>
-                            <span>${cart}</span>
+                            <span>$${cartCost}</span>
                         </a>
                         <div class="custom-menu">
                             <div id="shopping-cart">
@@ -89,7 +88,8 @@
                                 </c:forEach>
                                 <div class="shopping-cart-btns">
                                     <a class="main-btn" href="cart">View Cart</a>
-                                    <a class="primary-btn" href="checkout">Checkout <i class="fa fa-arrow-circle-right"></i>
+                                    <a class="primary-btn" href="checkout">Checkout <i
+                                            class="fa fa-arrow-circle-right"></i>
                                     </a>
                                 </div>
                             </div>

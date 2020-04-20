@@ -18,7 +18,8 @@ public class LoginFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {HttpServletRequest request = (HttpServletRequest) req;
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
+        HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         if (request.getRequestURI().matches(".*(css|jpg|png|gif|js)")) {
             chain.doFilter(request, response);

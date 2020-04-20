@@ -84,7 +84,7 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link d-block" href="login.jsp">
+                        <a class="nav-link d-block" href="logout">
                             Admin, <b>Logout</b>
                         </a>
                     </li>
