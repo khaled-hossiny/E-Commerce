@@ -3,6 +3,7 @@ package service;
 import entity.Product;
 import entity.User;
 import exceptions.InvalidLoginException;
+import org.hibernate.Transaction;
 import utility.HibernateUtil;
 
 import javax.persistence.EntityManager;
@@ -48,14 +49,16 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void editUser(int userId, User user) {
+    public void editUser(User user) {
+
         entityManager.getTransaction().begin();
-        User newUser = entityManager.find(User.class, userId);
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
-        newUser.setPassword(user.getPassword());
-        newUser.setEmail(user.getEmail());
-        newUser.setAddress(user.getAddress());
+        //entityManager.merge(u)
+//        User newUser = entityManager.find(User.class, userId);
+//        newUser.setFirstName(user.getFirstName());
+//        newUser.setLastName(user.getLastName());
+//        newUser.setPassword(user.getPassword());
+//        newUser.setEmail(user.getEmail());
+//        newUser.setAddress(user.getAddress());
         entityManager.merge(user);
         entityManager.getTransaction().commit();
 

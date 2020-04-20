@@ -29,7 +29,7 @@
             <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h2 class="tm-block-title mb-4">Welcome to Dashboard, Sign Up</h2>
+                        <h2 class="tm-block-title mb-4">Welcome to Dashboard, Edit Profile</h2>
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -42,9 +42,12 @@
                                         type="text"
                                         class="form-control validate"
                                         id="firstName"
-                                        value=""
                                         required
+                                        value= <%=request.getAttribute("firstname")%>
+
+<%--                                        <%=request.getAttribute("firstname")%>--%>
                                 />
+
                             </div>
                             <div class="form-group">
                                 <label for="lastName">Last Name</label>
@@ -53,8 +56,9 @@
                                         type="text"
                                         class="form-control validate"
                                         id="lastName"
-                                        value=""
                                         required
+                                        value=<%=request.getAttribute("lastname")%>
+
                                 />
                             </div>
                             <div class="form-group">
@@ -64,8 +68,9 @@
                                         type="text"
                                         class="form-control validate"
                                         id="email"
-                                        value=""
                                         required
+                                        value=<%=request.getAttribute("email")%>
+
                                 />
                             </div>
                             <div class="form-group mt-3">
@@ -75,8 +80,9 @@
                                         type="password"
                                         class="form-control validate"
                                         id="password"
-                                        value=""
                                         required
+                                        value=<%=request.getAttribute("password")%>
+
                                 />
                             </div>
                             <div class="form-group">
@@ -86,21 +92,21 @@
                                         type="text"
                                         class="form-control validate"
                                         id="address"
-                                        value=""
                                         required
+                                        value=<%=request.getAttribute("address")%>
+
                                 />
                             </div>
                             <div class="form-group mt-4">
-                                <button
+                                <a
                                         type="submit"
                                         class="btn btn-primary btn-block text-uppercase"
-                                >
-                                    Sign Up
-                                </button>
+                                        onclick="view(this)"
+                                        href="MyupdateServlet"/>
+
+
+                                </a>
                             </div>
-                            <button class="mt-5 btn btn-primary btn-block text-uppercase">
-                                Forgot your password?
-                            </button>
                         </form>
                     </div>
                 </div>
@@ -113,5 +119,22 @@
 <!-- https://jquery.com/download/ -->
 <script src="js/bootstrap.min.js"></script>
 <!-- https://getbootstrap.com/ -->
+<script>
+    function view(e) {
+        var firstname = document.getElementById("firstName").value;
+        var lastname = document.getElementById("lastName").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var address = document.getElementById("address").value;
+
+        $.post("MyupdateServlet",
+            {"firstName": firstname,"lastName" : lastname , "email":email, "password":password , "address":address }
+        );
+        console.log(firstname);
+
+
+    }
+
+</script>
 </body>
 </html>

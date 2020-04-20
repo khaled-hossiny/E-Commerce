@@ -1,5 +1,9 @@
 package servlet;
 
+import entity.Buyer;
+import entity.User;
+import service.UserServiceImp;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,14 +14,36 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "MyupdateServlet",urlPatterns={"/MyupdateServlet"})
 public class MyupdateServlet extends HttpServlet {
-    String firstName;
+    String firstName;;
+    String address ;
+    String lastName;
+    String email;
+    String password ;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          firstName = request.getParameter("firstName");
+        lastName = request.getParameter("lastName");
+        email = request.getParameter("email");
+        password = request.getParameter("password");
+        address = request.getParameter("address");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out= response.getWriter();
-        System.out.println("Name is = " +firstName);
-        out.println("Firstt naneeee nouran>>>" +firstName);
+        User user = (User) request.getSession().getAttribute("user");
+        UserServiceImp dao = new UserServiceImp();
+        //User userObject = new Buyer();
+        user.setAddress(address);
+        user.setLastName(lastName);
+        user.setFirstName(firstName);
+        user.setPassword(password);
+        user.setEmail(email);
+        System.out.println("User is my update = "+ user.getId());
+        System.out.println("User Dao = " +user);
+      dao.editUser(user);
+
+        response.sendRedirect("HomeServlet");
+
+
+
     }
 }

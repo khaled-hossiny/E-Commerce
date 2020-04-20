@@ -10,7 +10,7 @@ public interface UserService {
     User addUser(User user);
     User getUserById(int userId);
     List<User> getAllUsers();
-    void editUser(int userId, User user);
+    void editUser( User user);
     void deleteUser(int userId);
 
     User login(String email, String password) throws InvalidLoginException;
