@@ -27,10 +27,9 @@
 	-->
     <script>
         if (!!window.performance && window.performance.navigation.type === 2) {
-            // value 2 means "The page was accessed by navigating into the history"
             console.log('Reloading');
             window.location.reload();
-        };// reload whole page
+        };
 
     </script>
 </head>
@@ -56,13 +55,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto h-100">
                 <li class="nav-item">
-                    <a class="nav-link active" href="products.jsp">
+                    <a class="nav-link active" href="ShowProducts">
                         <i class="fas fa-shopping-cart"></i> Products
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="showUsers.jsp">
+                    <a class="nav-link" href="ShowUsers">
                         <img src="img/user.png" style="width: 30px">
                         <span> ShowCustomers  </span>
                     </a>
@@ -136,50 +135,33 @@
                                 >${product.description}</textarea>
                             </div>
                             <div class="form-group mb-3">
-<%--                                <label--%>
-<%--                                        for="category"--%>
-<%--                                >Category</label--%>
-<%--                                >--%>
-<%--                                <select--%>
-<%--                                        class="custom-select tm-select-accounts"--%>
-<%--                                        id="category"--%>
-<%--                                        name="category"--%>
-<%--                                >--%>
-<%--                                    <option selected>Select category</option>--%>
-
                                     <c:forEach  items="${product.categories}" var="row">
                                         <label class="checky"><c:out value="${row.name}"></c:out>
                                             <input type="checkbox" id="category" name="category" value="${row.id}" checked>
                                             <span class="checkmark"></span>
-<%--                                            <c:out value="${row2.name}"/>--%>
-
-
-<%--                                    <option value="2">Kids Clothes</option>--%>
-                                    <%--                                    <option value="3">Shoes</option>--%>
-                                    <%--                                    <option value="4">Sport Wear</option>--%>
                                         </label>
                                     </c:forEach>
 
-     <c:forEach items="${categories}" var="row2">
-         <c:set var="string2" value="1" />
-         <c:forEach  items="${product.categories}" var="row">
-         <c:choose>
-             <c:when test="${row.name == row2.name || string2 == 0}">
-             <c:set var="string2" value="0" />
+                             <c:forEach items="${categories}" var="row2">
+                                 <c:set var="string2" value="1" />
+                                 <c:forEach  items="${product.categories}" var="row">
+                                 <c:choose>
+                                     <c:when test="${row.name == row2.name || string2 == 0}">
+                                     <c:set var="string2" value="0" />
 
-             </c:when>
-             <c:when test="${row.name != row2.name || string2 != 0}">
-                 <c:set var="string2" value="1" />
-             </c:when>
-         </c:choose>
-     </c:forEach>
-        <c:if test="${string2 == '1'}">
-    <label class="checky"><c:out value="${row2.name}"></c:out>
-        <input type="checkbox" id="category" name="category" value="${row2.id}">
-        <span class="checkmark"></span>
-    </label>
-        </c:if>
-    </c:forEach>
+                                     </c:when>
+                                     <c:when test="${row.name != row2.name || string2 != 0}">
+                                         <c:set var="string2" value="1" />
+                                     </c:when>
+                                 </c:choose>
+                             </c:forEach>
+                                <c:if test="${string2 == '1'}">
+                            <label class="checky"><c:out value="${row2.name}"></c:out>
+                                <input type="checkbox" id="category" name="category" value="${row2.id}">
+                                <span class="checkmark"></span>
+                            </label>
+                                </c:if>
+                            </c:forEach>
 
                             </div>
                             <div class="row">
@@ -230,58 +212,7 @@
                                     $('#img').val(output.src);
                                 };
                             </script>
-
-                            <%--              <input--%>
-                            <%--                      id="imageBtn"--%>
-                            <%--                      required--%>
-                            <%--                      type="button"--%>
-                            <%--                      style="position:absolute;top:100px;right:30px;background-color: #f8694a;height: 50px;width: 200px;"--%>
-                            <%--                      class="btn btn-primary btn-block mx-auto"--%>
-                            <%--                      value="UPLOAD PRODUCT IMAGE"--%>
-                            <%--                      onclick="document.getElementById('fileName').click();">--%>
                         </div>
-
-                        <%--                <label><b><br>Description</b></label>--%>
-                        <%--                <textarea placeholder="Enter product description" name="productDescription" required></textarea>--%>
-                        <%--               <br><br><br><br><br><br><br><br><br>--%>
-                        <%--              <div>--%>
-                        <%--                <input--%>
-                        <%--                                    id="imageBtn"--%>
-                        <%--                                    required--%>
-                        <%--                                    type="button"--%>
-                        <%--                                    style="position:absolute;top:100px;right:30px;background-color: #f8694a;height: 50px;width: 200px;"--%>
-                        <%--                                    value="UPLOAD PRODUCT IMAGE"--%>
-                        <%--                                    onclick="document.getElementById('productImage').click();">--%>
-                        <%--              </div>--%>
-                        <%--              </div>--%>
-
-                        <%--                <div  class="tm-product-img-dummy mx-auto">--%>
-                        <%--                  <i--%>
-                        <%--                    class="fas fa-cloud-upload-alt tm-upload-icon"--%>
-                        <%--                    onclick="document.getElementById('fileName').click();"--%>
-
-                        <%--                  ></i>--%>
-                        <%--                </div>--%>
-                        <%--                <div   class="custom-file mt-3 mb-3">--%>
-
-                        <%--                  <input id="fileName"  name="fileName" type="file"  onchange="loadFile(event)" style="display:none; background-color: #1d2124"; size="30" required />--%>
-
-                        <%--                  <input--%>
-                        <%--                    id="imageBtn"--%>
-                        <%--                    required--%>
-                        <%--                    type="button"--%>
-                        <%--                    class="btn btn-primary btn-block mx-auto"--%>
-                        <%--                    value="UPLOAD PRODUCT IMAGE"--%>
-                        <%--                    onclick="document.getElementById('fileName').click();"--%>
-                        <%--                  />--%>
-                        <%--                  <script>--%>
-                        <%--                    var loadFile = function (event) {--%>
-                        <%--                      var output = document.getElementById('back');--%>
-                        <%--                      output.style.backgroundImage = URL.createObjectURL(event.target.files[0]);--%>
-                        <%--                    }--%>
-                        <%--                  </script>--%>
-
-                        <%--                </div>--%>
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary btn-block text-uppercase">Update Now</button>
@@ -292,28 +223,11 @@
         </div>
     </div>
 </div>
-<%--    <footer class="tm-footer row tm-mt-small">--%>
-<%--        <div class="col-12 font-weight-light">--%>
-<%--          <p class="text-center text-white mb-0 px-4 small">--%>
-<%--            Copyright &copy; <b>2018</b> All rights reserved. --%>
-<%--            --%>
-<%--            Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>--%>
-<%--        </p>--%>
-<%--        </div>--%>
-<%--    </footer> --%>
 
 <script src="js/jquery-3.3.1.min.js"></script>
 <!-- https://jquery.com/download/ -->
 <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
 <!-- https://jqueryui.com/download/ -->
 <script src="js/bootstrap.min.js"></script>
-<!-- https://getbootstrap.com/ -->
-<%--    <script>--%>
-<%--      $(function() {--%>
-<%--        $("#expire_date").datepicker({--%>
-<%--          defaultDate: "10/22/2020"--%>
-<%--        });--%>
-<%--      });--%>
-<%--    </script>--%>
 </body>
 </html>
