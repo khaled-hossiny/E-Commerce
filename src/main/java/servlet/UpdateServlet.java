@@ -17,9 +17,15 @@ public class UpdateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             User user = (User) request.getSession().getAttribute("user");
-            user.getFirstName();
+        String firstName = user.getFirstName();
+        request.setAttribute("firstname",firstName);
             user.getLastName();
+            user.getEmail();
+            user.getPassword();
+            user.getAddress();
 
+
+        request.getRequestDispatcher("MyOrderDetails.jsp").include(request, response);
 
     }
 }
