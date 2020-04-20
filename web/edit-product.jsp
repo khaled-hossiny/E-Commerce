@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page import="service.AdminServiceImpl"%>
 <html lang="en">
 <head>
@@ -148,7 +149,7 @@
 
                                     <c:forEach  items="${product.categories}" var="row">
                                         <label class="checky"><c:out value="${row.name}"></c:out>
-                                            <input type="checkbox" id="category" name="category" value="${row.name}" checked>
+                                            <input type="checkbox" id="category" name="category" value="${row.id}" checked>
                                             <span class="checkmark"></span>
 <%--                                            <c:out value="${row2.name}"/>--%>
 
@@ -174,7 +175,7 @@
      </c:forEach>
         <c:if test="${string2 == '1'}">
     <label class="checky"><c:out value="${row2.name}"></c:out>
-        <input type="checkbox" id="category" name="category" value="${row2.name}">
+        <input type="checkbox" id="category" name="category" value="${row2.id}">
         <span class="checkmark"></span>
     </label>
         </c:if>

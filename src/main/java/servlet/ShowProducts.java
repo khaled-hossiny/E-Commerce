@@ -28,7 +28,7 @@ public class ShowProducts extends HttpServlet {
         List<Category> categories=new ArrayList<>();
         log("DO GET");
         list=adminService.getAllProducts();
-        categories=adminService.getAllCategory();
+        categories=adminService.getAllCategories();
         req.setAttribute("list", list);
         req.setAttribute("categories",categories);
         RequestDispatcher ry = req.getRequestDispatcher("products.jsp");

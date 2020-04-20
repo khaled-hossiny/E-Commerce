@@ -53,7 +53,7 @@ public class EditProduct extends HttpServlet {
         Product product = adminService.getProductById(Integer.parseInt(productId));
         request.setAttribute("product", product);
         List<Category> categories=new ArrayList<>();
-        categories=adminService.getAllCategory();
+        categories=adminService.getAllCategories();
         request.setAttribute("categories",categories);
         RequestDispatcher dispatcher = request.getRequestDispatcher("edit-product.jsp");
         dispatcher.forward(request, response);
@@ -89,6 +89,7 @@ public class EditProduct extends HttpServlet {
             uploadDir.mkdir();
         }
         String name = "", desc = "", price = "", stock = "", filePath = "";
+        List<Integer> categoryIds = new ArrayList<>();
         int id = 0;
 
         try {
@@ -123,8 +124,8 @@ public class EditProduct extends HttpServlet {
                                 id = Integer.parseInt(new String(item.get()));
                                 break;
                             case "category":
-                                selectedStudentIds.add(new String(item.get()));
-                                        break;
+                                categoryIds.add(Integer.parseInt(new String(item.get())));
+                                break;
                             default:
                                 price = new String(item.get());
                         }
@@ -135,24 +136,18 @@ public class EditProduct extends HttpServlet {
             request.setAttribute("message",
                     "There was an error: " + ex.getMessage());
         }
-        Product product = new Product();
+        List<Category> categories = adminService.getCategoriesByIds(categoryIds);
+        Product product = adminService.getProductById(id);
         product.setName(name);
         product.setQuantity(Integer.parseInt(stock));
         product.setPrice(Integer.parseInt(price));
         product.setDescription(desc);
-
-        for(int i=0;i<selectedStudentIds.size();i++) {
-            Category categoryChoose = new Category();
-            categoryChoose.setName(selectedStudentIds.get(i));
-            categorySet.add(categoryChoose);
-        }
-        System.out.println("category Size"+categorySet.size());
+        product.setCategories(new HashSet<>(categories));
         if(!filePath.equals(UPLOAD_DIRECTORY + File.separator)) {
             product.setImage(filePath);
         }
         try {
-            product.setCategories(categorySet);
-            adminService.editProduct(id, product);
+            adminService.editProduct(product);
             response.sendRedirect("ShowProducts");
         } catch (ProductAlreadyExistsException e) {
             e.printStackTrace();

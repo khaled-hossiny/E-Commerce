@@ -149,7 +149,7 @@
 
                                 <input type="checkbox"
                                         id="category"
-                                         value="${row2.name}"
+                                         value="${row2.id}"
                                         name="category"
 
                                 />

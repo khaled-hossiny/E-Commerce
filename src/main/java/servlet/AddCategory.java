@@ -22,7 +22,7 @@ public class AddCategory extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AdminServiceImpl adminService=new AdminServiceImpl();
-        List<Category> categoryList=adminService.getAllCategory();
+        List<Category> categoryList=adminService.getAllCategories();
         System.out.println("size"+categoryList.size());
         Category category=new Category();
         category.setName(req.getParameter("name"));

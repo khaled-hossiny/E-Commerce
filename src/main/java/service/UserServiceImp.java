@@ -73,8 +73,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-
-    public List<Category> getAllCategory() {
+    public List<Category> getAllCategories() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Category> cq = cb.createQuery(Category.class);
         Root<Category> root = cq.from(Category.class);
@@ -87,13 +86,6 @@ public class UserServiceImp implements UserService {
     @Override
     public void editUser(User user) {
         entityManager.getTransaction().begin();
-        //entityManager.merge(u)
-//        User newUser = entityManager.find(User.class, userId);
-//        newUser.setFirstName(user.getFirstName());
-//        newUser.setLastName(user.getLastName());
-//        newUser.setPassword(user.getPassword());
-//        newUser.setEmail(user.getEmail());
-//        newUser.setAddress(user.getAddress());
         entityManager.merge(user);
         entityManager.getTransaction().commit();
 

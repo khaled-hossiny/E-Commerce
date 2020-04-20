@@ -22,23 +22,20 @@ public class AdminServiceImpl extends UserServiceImp implements AdminService {
 
 
     @Override
-    public int addProduct(Product product) {
+    public int addProduct(Product product) throws ProductAlreadyExistsException{
         entityManager.getTransaction().begin();
-        entityManager.persist(product);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.persist(product);
+            entityManager.getTransaction().commit();
+        }
+        catch (RollbackException e) {
+            e.printStackTrace();
+            throw new ProductAlreadyExistsException("product already exists exception");
+        }
         System.out.println("add product Cat size:"+product.getCategories());
         return product.getId();
     }
 
-    @Override
-    public List<Product> getAllProducts() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Product> cq = cb.createQuery(Product.class);
-        Root<Product> root = cq.from(Product.class);
-        cq.select(root);
-        TypedQuery<Product> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
     @Override
     public void editProduct(int id, Product product) throws ProductAlreadyExistsException {
         entityManager.getTransaction().begin();
@@ -59,8 +56,20 @@ public class AdminServiceImpl extends UserServiceImp implements AdminService {
             e.printStackTrace();
             throw new ProductAlreadyExistsException("product already exists");
         }
+    }
 
-
+    @Override
+    public void editProduct(Product product) throws ProductAlreadyExistsException {
+        entityManager.getTransaction().begin();
+        try {
+            entityManager.merge(product);
+            product.getCategories().forEach(category -> entityManager.merge(category));
+            entityManager.getTransaction().commit();
+        }
+        catch (RollbackException e) {
+            e.printStackTrace();
+            throw new ProductAlreadyExistsException("product already exists");
+        }
     }
 
     @Override
@@ -90,17 +99,18 @@ public class AdminServiceImpl extends UserServiceImp implements AdminService {
         return category.getId();
     }
 
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
     @Override
-    public List<Category> getAllCategories() {
+    public List<Category> getCategoriesByIds(List<Integer> categoryIds) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Category> cq = cb.createQuery(Category.class);
         Root<Category> root = cq.from(Category.class);
-        cq.select(root);
+        cq.select(root).where(root.get("id").in(categoryIds));
         TypedQuery<Category> query = entityManager.createQuery(cq);
         return query.getResultList();
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 //    public int deleteCategory(int parseInt) {
 //        entityManager.getTransaction().begin();

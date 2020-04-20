@@ -17,5 +17,5 @@ public interface UserService {
     User login(String email, String password) throws InvalidLoginException;
     Product getProductById(int productId);
     List<Product> getAllProducts();
-    List<Category> getAllCategory();
+    List<Category> getAllCategories();
 }

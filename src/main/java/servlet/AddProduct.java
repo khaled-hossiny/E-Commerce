@@ -14,6 +14,7 @@ import java.io.IOException;
 import entity.Category;
 
 import entity.Product;
+import exceptions.ProductAlreadyExistsException;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -35,13 +36,12 @@ public class AddProduct extends HttpServlet {
     @Inject
     AdminService adminService;
     private boolean check = true;
-    List<String>selectedStudentIds=new ArrayList<>();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // super.doGet(req, resp);
         resp.setContentType("text/html");
         List<Category> categories = new ArrayList<>();
-        categories = adminService.getAllCategory();
+        categories = adminService.getAllCategories();
         req.setAttribute("categories", categories);
         RequestDispatcher ry = req.getRequestDispatcher("add-product.jsp");
         ry.forward(req, resp);
@@ -78,6 +78,7 @@ public class AddProduct extends HttpServlet {
             uploadDir.mkdir();
         }
         String name = "", desc = "", price = "", stock = "", filePath = "", category = "";
+        List<Integer> categoryIds = new ArrayList<>();
 
         try {
             // parses the request's content to extract file data
@@ -107,7 +108,9 @@ public class AddProduct extends HttpServlet {
                                 stock = new String(item.get());
                                 break;
                             case "category":
-                               selectedStudentIds.add(new String(item.get()));
+                               //selectedStudentIds.add(new String(item.get()));
+                                categoryIds.add(Integer.parseInt(new String(item.get())));
+                               break;
                             default:
                                 price = new String(item.get());
                         }
@@ -118,42 +121,22 @@ public class AddProduct extends HttpServlet {
             request.setAttribute("message",
                     "There was an error: " + ex.getMessage());
         }
-        System.out.println("Size of List is "+selectedStudentIds.size());
+        List<Category> categories = adminService.getCategoriesByIds(categoryIds);
         Product product = new Product();
         product.setName(name);
         product.setQuantity(Integer.parseInt(stock));
         product.setPrice(Integer.parseInt(price));
         product.setDescription(desc);
         product.setImage(filePath);
-
-        for(int i=0;i<selectedStudentIds.size();i++) {
-            Category categoryChoose = new Category();
-            categoryChoose.setName(selectedStudentIds.get(i));
-            categorySet.add(categoryChoose);
+        product.setCategories(new HashSet<>(categories));
+        for(Category cat : categories) {
+            cat.getProducts().add(product);
         }
-        System.out.println("Size of Set"+categorySet.size());
-
-        //System.out.println("categgggggggggg"+CategoryType.getType(Integer.parseInt(category)));
-
-        List<Product> products = adminService.getAllProducts();
-
-
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getName().equals(name)) {
-                check = false;
-               // System.out.println(name+"is"+products.get(i).getName());
-                break;
-            }
-        }
-        if (check == true) {
-
-            product.setCategories(categorySet);
+        try {
             adminService.addProduct(product);
-
-          //  System.out.println(name);
-            //request.getRequestDispatcher("ShowProducts").include(request, response);
             response.sendRedirect("ShowProducts");
-        } else {
+        } catch (ProductAlreadyExistsException e) {
+            e.printStackTrace();
             request.getRequestDispatcher("ErrorPage.html").include(request, response);
         }
 
