@@ -15,7 +15,7 @@ public class Product implements Serializable {
     private int price;
     private String image;
     private Set<CartProduct> cartProductsById = new HashSet<>();
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories = new HashSet<Category>(0);
     private Set<UserBuyProduct> userBuyProductsById = new HashSet<>();
 
     @Id
@@ -102,11 +102,11 @@ public class Product implements Serializable {
         this.cartProductsById = cartProductsById;
     }
 
-    @ManyToMany
+    @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.ALL})
     @JoinTable(name = "product_category", joinColumns = {
-            @JoinColumn(name = "product_id", nullable = false, updatable = false)
+            @JoinColumn(name = "product_id")
     }, inverseJoinColumns = {
-            @JoinColumn(name = "category_id", nullable = false, updatable = false)
+            @JoinColumn(name = "category_id")
     })
     public Set<Category> getCategories() {
         return categories;

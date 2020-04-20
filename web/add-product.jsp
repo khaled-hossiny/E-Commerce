@@ -19,10 +19,12 @@
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="css/templatemo-style.css">
+    <link rel="stylesheet" href="css/checky.css">
     <!--
     Product Admin CSS Template
     https://templatemo.com/tm-524-product-admin
     -->
+
     <script>
         if (!!window.performance && window.performance.navigation.type === 2) {
             // value 2 means "The page was accessed by navigating into the history"
@@ -135,24 +137,31 @@
                                         required
                                 ></textarea>
                             </div>
-                            <div class="form-group mb-3">
+                            <div style="color: white;text-decoration-color: white;">
+                                <c:forEach items="${categories}" var="row2">
                                 <label
-                                        for="category"
-                                >Category</label
+                                        class="checky"
+<%--                                        for="category"--%>
+<%--                                        class="checkBox"--%>
                                 >
-                                <select
-                                        class="custom-select tm-select-accounts"
+
+                                    <c:out value="${row2.name}"/>
+
+                                <input type="checkbox"
                                         id="category"
+                                         value="${row2.name}"
                                         name="category"
-                                >
-                                    <option selected>Select category</option>
-                                    <c:forEach items="${categories}" var="row2">
-                                    <option> <c:out value="${row2.name}"/></option>
+
+                                />
+                                    <span class="checkmark"></span>
+                                </label>
+<%--                                    <option selected>Select category</option>--%>
+
+<%--                                    <option> </option>--%>
                                </c:forEach>
 <%--                                    <option value="2">Kids Clothes</option>--%>
 <%--                                    <option value="3">Shoes</option>--%>
 <%--                                    <option value="4">Sport Wear</option>--%>
-                                </select>
                             </div>
                             <div class="row">
                                 <div class="form-group mb-3 col-xs-12 col-sm-6">

@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="css/templatemo-style.css">
+    <link rel="stylesheet" href="css/checky.css">
     <!--
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
@@ -134,29 +135,51 @@
                                 >${product.description}</textarea>
                             </div>
                             <div class="form-group mb-3">
-                                <label
-                                        for="category"
-                                >Category</label
-                                >
-                                <select
-                                        class="custom-select tm-select-accounts"
-                                        id="category"
-                                        name="category"
-                                >
+<%--                                <label--%>
+<%--                                        for="category"--%>
+<%--                                >Category</label--%>
+<%--                                >--%>
+<%--                                <select--%>
+<%--                                        class="custom-select tm-select-accounts"--%>
+<%--                                        id="category"--%>
+<%--                                        name="category"--%>
+<%--                                >--%>
 <%--                                    <option selected>Select category</option>--%>
-                                    <c:forEach items="${categories}" var="row2">
-                                    <c:forEach  items="${product.categories}" var="row">
-                                        <c:if test="${row.name == row2.name}">
-                                        <option value="<c:out value="${row2.id}"/>" selected> <c:out value="${row2.name}"/></option>
-                                        </c:if>
-                                    </c:forEach>
-                                        <option value="<c:out value="${row2.id}"/>" > <c:out value="${row2.name}"/></option>
 
-                                    </c:forEach>
+                                    <c:forEach  items="${product.categories}" var="row">
+                                        <label class="checky"><c:out value="${row.name}"></c:out>
+                                            <input type="checkbox" id="category" name="category" value="${row.name}" checked>
+                                            <span class="checkmark"></span>
+<%--                                            <c:out value="${row2.name}"/>--%>
+
+
 <%--                                    <option value="2">Kids Clothes</option>--%>
                                     <%--                                    <option value="3">Shoes</option>--%>
                                     <%--                                    <option value="4">Sport Wear</option>--%>
-                                </select>
+                                        </label>
+                                    </c:forEach>
+
+     <c:forEach items="${categories}" var="row2">
+         <c:set var="string2" value="1" />
+         <c:forEach  items="${product.categories}" var="row">
+         <c:choose>
+             <c:when test="${row.name == row2.name || string2 == 0}">
+             <c:set var="string2" value="0" />
+
+             </c:when>
+             <c:when test="${row.name != row2.name || string2 != 0}">
+                 <c:set var="string2" value="1" />
+             </c:when>
+         </c:choose>
+     </c:forEach>
+        <c:if test="${string2 == '1'}">
+    <label class="checky"><c:out value="${row2.name}"></c:out>
+        <input type="checkbox" id="category" name="category" value="${row2.name}">
+        <span class="checkmark"></span>
+    </label>
+        </c:if>
+    </c:forEach>
+
                             </div>
                             <div class="row">
                                 <div class="form-group mb-3 col-xs-12 col-sm-6">

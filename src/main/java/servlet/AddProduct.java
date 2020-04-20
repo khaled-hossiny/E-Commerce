@@ -35,7 +35,7 @@ public class AddProduct extends HttpServlet {
     @Inject
     AdminService adminService;
     private boolean check = true;
-
+    List<String>selectedStudentIds=new ArrayList<>();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // super.doGet(req, resp);
@@ -107,7 +107,7 @@ public class AddProduct extends HttpServlet {
                                 stock = new String(item.get());
                                 break;
                             case "category":
-                                category = new String(item.get());
+                               selectedStudentIds.add(new String(item.get()));
                             default:
                                 price = new String(item.get());
                         }
@@ -118,15 +118,20 @@ public class AddProduct extends HttpServlet {
             request.setAttribute("message",
                     "There was an error: " + ex.getMessage());
         }
-
+        System.out.println("Size of List is "+selectedStudentIds.size());
         Product product = new Product();
         product.setName(name);
         product.setQuantity(Integer.parseInt(stock));
         product.setPrice(Integer.parseInt(price));
         product.setDescription(desc);
         product.setImage(filePath);
-        Category categoryChoose = new Category();
-        categoryChoose.setName(category);
+
+        for(int i=0;i<selectedStudentIds.size();i++) {
+            Category categoryChoose = new Category();
+            categoryChoose.setName(selectedStudentIds.get(i));
+            categorySet.add(categoryChoose);
+        }
+        System.out.println("Size of Set"+categorySet.size());
 
         //System.out.println("categgggggggggg"+CategoryType.getType(Integer.parseInt(category)));
 
@@ -136,14 +141,16 @@ public class AddProduct extends HttpServlet {
         for (int i = 0; i < products.size(); i++) {
             if (products.get(i).getName().equals(name)) {
                 check = false;
-                System.out.println(name+"is"+products.get(i).getName());
+               // System.out.println(name+"is"+products.get(i).getName());
                 break;
             }
         }
         if (check == true) {
-            adminService.addProduct(product);
+
             product.setCategories(categorySet);
-            System.out.println(name);
+            adminService.addProduct(product);
+
+          //  System.out.println(name);
             //request.getRequestDispatcher("ShowProducts").include(request, response);
             response.sendRedirect("ShowProducts");
         } else {

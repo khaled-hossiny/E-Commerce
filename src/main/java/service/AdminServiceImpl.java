@@ -26,9 +26,19 @@ public class AdminServiceImpl extends UserServiceImp implements AdminService {
         entityManager.getTransaction().begin();
         entityManager.persist(product);
         entityManager.getTransaction().commit();
+        System.out.println("add product Cat size:"+product.getCategories());
         return product.getId();
     }
 
+    @Override
+    public List<Product> getAllProducts() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+        Root<Product> root = cq.from(Product.class);
+        cq.select(root);
+        TypedQuery<Product> query = entityManager.createQuery(cq);
+        return query.getResultList();
+    }
     @Override
     public void editProduct(int id, Product product) throws ProductAlreadyExistsException {
         entityManager.getTransaction().begin();
@@ -83,7 +93,15 @@ public class AdminServiceImpl extends UserServiceImp implements AdminService {
     public EntityManager getEntityManager() {
         return entityManager;
     }
-
+    @Override
+    public List<Category> getAllCategories() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+        Root<Category> root = cq.from(Category.class);
+        cq.select(root);
+        TypedQuery<Category> query = entityManager.createQuery(cq);
+        return query.getResultList();
+    }
 //    public int deleteCategory(int parseInt) {
 //        entityManager.getTransaction().begin();
 //        Category category = entityManager.find(Category.class, parseInt);
