@@ -65,9 +65,9 @@
                       Login
                     </button>
                   </div>
-                  <button class="mt-5 btn btn-primary btn-block text-uppercase">
-                    Forgot your password?
-                  </button>
+                  <a class="mt-5 btn btn-primary btn-block text-uppercase" href="register">
+                    Register
+                  </a>
                 </form>
               </div>
             </div>

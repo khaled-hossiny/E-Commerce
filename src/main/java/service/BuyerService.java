@@ -11,7 +11,6 @@ import java.util.Set;
 public interface BuyerService extends UserService{
     CartProduct addProductToShoppingCart(Buyer buyer, int productId, int quantity) throws ProductNotInStockException;
     CartProduct removeProductFromShoppingCart(Buyer buyer, int productId, int quantity) throws ProductNotInStockException, ProductNotInShoppingCartException;
-    CartProduct removeProductFromShoppingCart(int buyerID, int productId) throws ProductNotInStockException, ProductNotInShoppingCartException;
     Set<UserBuyProduct> buy(Buyer buyer) throws NotEnoughCreditException;
     List<Product> searchProduct (String searchName);
 }

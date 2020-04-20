@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,6 +31,7 @@ public class BuyerServiceImpl extends UserServiceImp implements BuyerService {
         Product product = entityManager.find(Product.class, productId);
         entityManager.getTransaction().begin();
         ShoppingCart cart = buyer.getShoppingCartsById();
+        entityManager.merge(buyer);
         for (CartProduct cartProduct : cart.getCartProductsById()) {
             if (cartProduct.getProduct().equals(product)) {
                 int quantityInCart = cartProduct.getQuantity();
@@ -37,6 +39,7 @@ public class BuyerServiceImpl extends UserServiceImp implements BuyerService {
                     throw new ProductNotInStockException("product not in stock");
                 }
                 cartProduct.setQuantity(quantityInCart + quantity);
+                entityManager.merge(cartProduct);
                 entityManager.getTransaction().commit();
                 return cartProduct;
             }
@@ -60,39 +63,21 @@ public class BuyerServiceImpl extends UserServiceImp implements BuyerService {
         ShoppingCart cart = buyer.getShoppingCartsById();
         entityManager.merge(buyer);
         entityManager.merge(cart);
-        for (CartProduct cartProduct : cart.getCartProductsById()) {
+        Iterator<CartProduct> cartProductIterator = cart.getCartProductsById().iterator();
+        while (cartProductIterator.hasNext()) {
+            CartProduct cartProduct = cartProductIterator.next();
             if (cartProduct.getProduct().equals(product)) {
                 int quantityInCart = cartProduct.getQuantity();
                 int updatedQuantity = quantityInCart - quantity;
                 if (updatedQuantity <= 0) {
-                    String hql = "delete from CartProduct where pk.product = :product and pk.cart = :cart";
-                    Query query = entityManager.createQuery(hql);
-                    query.setParameter("product", product);
-                    query.setParameter("cart", cart);
-                    query.executeUpdate();
+                    cart.getCartProductsById().remove(cartProduct);
+                    CartProduct original = entityManager.find(CartProduct.class, cartProduct.getPk());
+                    entityManager.remove(original);
                 } else {
                     cartProduct.setQuantity(updatedQuantity);
                     cart.calculateTotalCost();
                     entityManager.merge(cartProduct);
                 }
-                entityManager.getTransaction().commit();
-                entityManager.refresh(buyer);
-                return cartProduct;
-            }
-        }
-        throw new ProductNotInShoppingCartException("product not found in shopping cart");
-    }
-
-    @Override
-    public CartProduct removeProductFromShoppingCart(int buyerID, int productId) throws ProductNotInShoppingCartException {
-        Buyer buyer = entityManager.find(Buyer.class, buyerID);
-        Product product = entityManager.find(Product.class, productId);
-        entityManager.getTransaction().begin();
-        ShoppingCart cart = buyer.getShoppingCartsById();
-        for (CartProduct cartProduct : cart.getCartProductsById()) {
-            if (cartProduct.getProduct().equals(product)) {
-                entityManager.remove(cartProduct);
-                cart.calculateTotalCost();
                 entityManager.getTransaction().commit();
                 return cartProduct;
             }
@@ -122,12 +107,14 @@ public class BuyerServiceImpl extends UserServiceImp implements BuyerService {
             userBuyProduct.setProduct(product);
             int updatedQuantity = product.getQuantity() - cartProduct.getQuantity();
             product.setQuantity(updatedQuantity);
+            CartProduct original = entityManager.find(CartProduct.class, cartProduct.getPk());
+            entityManager.remove(original);
             entityManager.merge(product);
             entityManager.persist(userBuyProduct);
             return userBuyProduct;
         }).collect(Collectors.toSet());
         buyer.setUserBuyProductsById(purchases);
-        clearShoppingCart(buyer);
+        shoppingCart.getCartProductsById().clear();
         buyer.getShoppingCartsById().getCartProductsById().clear();
         entityManager.getTransaction().commit();
         return purchases;
@@ -140,13 +127,5 @@ public class BuyerServiceImpl extends UserServiceImp implements BuyerService {
         System.out.println("the serchName is " + searchName);
         List<Product> resultList = query.getResultList();
         return resultList;
-    }
-
-    private void clearShoppingCart(Buyer buyer) {
-        ShoppingCart shoppingCart = buyer.getShoppingCartsById();
-        String hql = "delete from CartProduct where pk.cart = :cart";
-        Query query = entityManager.createQuery(hql);
-        query.setParameter("cart", shoppingCart);
-        query.executeUpdate();
     }
 }
