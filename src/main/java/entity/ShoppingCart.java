@@ -24,7 +24,7 @@ public class ShoppingCart implements Serializable {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "pk.cart", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "pk.cart")
     public Set<CartProduct> getCartProductsById() {
         return cartProductsById;
     }

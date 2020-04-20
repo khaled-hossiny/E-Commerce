@@ -93,7 +93,7 @@ public class Product implements Serializable {
         return Objects.hash(id, name, description);
     }
 
-    @OneToMany(mappedBy = "pk.product" ,cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "pk.product")
     public Set<CartProduct> getCartProductsById() {
         return cartProductsById;
     }
@@ -116,7 +116,7 @@ public class Product implements Serializable {
         this.categories = categories;
     }
 
-    @OneToMany(mappedBy = "pk.product", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "pk.product")
     public Set<UserBuyProduct> getUserBuyProductsById() {
         return userBuyProductsById;
     }
