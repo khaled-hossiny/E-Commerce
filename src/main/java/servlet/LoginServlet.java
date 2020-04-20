@@ -1,8 +1,11 @@
 package servlet;
+import entity.Buyer;
 import entity.User;
 import exceptions.InvalidLoginException;
 import service.UserServiceImp;
+import utility.BuyerSession;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +18,8 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private UserServiceImp loginDao;
+    @Inject
+    BuyerSession buyerSession;
 
     public void init() {
         loginDao = new UserServiceImp();
@@ -42,7 +47,10 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         User user = loginDao.login(username, password);
         HttpSession session = request.getSession();
+        if(user instanceof Buyer) {
+            buyerSession.setBuyer((Buyer) user);
+        }
         session.setAttribute("user", user);
-        response.sendRedirect("accounts.jsp");
+        response.sendRedirect("webUSer/home");
     }
 }

@@ -114,7 +114,7 @@
                                 <input
                                         id="name"
                                         name="name"
-                                        pattern="[a-zA-Z0-9]+" minlength="2" maxlength="50"
+                                        pattern="^$|^\S+.*" minlength="2" maxlength="50"
                                         type="text"
                                         class="form-control validate"
                                         required
@@ -123,7 +123,7 @@
                             <div class="form-group mb-3">
                                 <label
                                         for="desc"
-                                        pattern="[a-zA-Z0-9]+" minlength="4" maxlength="50"
+                                        pattern="^$|^\S+.*" minlength="4" maxlength="50"
                                 >Description</label
                                 >
                                 <textarea

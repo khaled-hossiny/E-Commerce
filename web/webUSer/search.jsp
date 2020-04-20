@@ -529,7 +529,7 @@
 						<li class="dropdown default-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pages <i class="fa fa-caret-down"></i></a>
 							<ul class="custom-menu">
 								<li><a href="search.jsp">Home</a></li>
-								<li><a href="products.html">Products</a></li>
+								<li><a href="products.jsp">Products</a></li>
 								<li><a href="product-page.jsp">Product Details</a></li>
 								<li><a href="checkout.html">Checkout</a></li>
 							</ul>

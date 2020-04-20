@@ -3,11 +3,12 @@ package entity;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Buyer extends User {
+public class Buyer extends User implements Serializable {
 
 
     private CreditCard creditCardById;

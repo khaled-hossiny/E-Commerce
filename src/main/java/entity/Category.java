@@ -1,12 +1,13 @@
 package entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Category {
+public class Category implements Serializable {
     private Integer id;
     private String name;
     private Set<Product> products = new HashSet<>();

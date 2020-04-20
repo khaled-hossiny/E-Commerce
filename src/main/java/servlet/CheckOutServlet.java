@@ -1,8 +1,7 @@
 package servlet;
 
-import entity.Product;
+import exceptions.NotEnoughCreditException;
 import service.BuyerService;
-import service.BuyerServiceImpl;
 import utility.BuyerSession;
 
 import javax.inject.Inject;
@@ -12,10 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet("/webUSer/home")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/webUSer/checkout")
+public class CheckOutServlet extends HttpServlet {
     @Inject
     BuyerService buyerService;
 
@@ -24,14 +22,11 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String searchQuery = req.getParameter("searchQuery");
-        List<Product> products;
-        if (searchQuery != null) {
-            products = buyerService.searchProduct(searchQuery);
-        } else {
-            products = buyerService.getAllProducts();
+        try {
+            buyerService.buy(buyerSession.getBuyer());
+        } catch (NotEnoughCreditException e) {
+            e.printStackTrace();
         }
-        req.setAttribute("products", products);
-        req.getRequestDispatcher("products.jsp").forward(req, resp);
+        resp.sendRedirect("home");
     }
 }

@@ -206,7 +206,6 @@
                                     $('#img').val(output.src);
                                 };
                             </script>
-                            <input type="hidden" id="img" name="img" value="${product.image}">
 
                             <%--              <input--%>
                             <%--                      id="imageBtn"--%>

@@ -5,6 +5,7 @@ import entity.Product;
 import service.AdminService;
 import service.AdminServiceImpl;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,18 +18,17 @@ import java.util.List;
 
 public class ShowProducts extends HttpServlet {
 
+    @Inject AdminService adminService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doGet(req, resp);
-        AdminService adminService=new AdminServiceImpl();
         PrintWriter out = resp.getWriter();
         List<Product> list=new ArrayList<>();
         List<Category> categories=new ArrayList<>();
         log("DO GET");
         list=adminService.getAllProducts();
         categories=adminService.getAllCategory();
-        System.out.println("name" +categories.get(0).getName());
         req.setAttribute("list", list);
         req.setAttribute("categories",categories);
         RequestDispatcher ry = req.getRequestDispatcher("products.jsp");
@@ -38,7 +38,6 @@ public class ShowProducts extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
-        AdminService adminService=new AdminServiceImpl();
         List<Product> list=new ArrayList<>();
         PrintWriter out = resp.getWriter();
         list=adminService.getAllProducts();

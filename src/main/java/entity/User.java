@@ -1,11 +1,12 @@
 package entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public  abstract class User {
+public  abstract class User implements Serializable {
     private Integer id;
     private String address;
     private String firstName;
