@@ -48,10 +48,10 @@
 <div class="section">
     <!-- container -->
     <div class="container">
-        <div class="row">
+        <div class="row-sm-4">
             <c:forEach items="${products}" var="product">
                 <!-- Product Single -->
-                <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="col-sm-4 ">
                     <div class="product product-single">
                         <div class="product-thumb">
                             <a class="main-btn quick-view" href="product?id=${product.id}"><i class="fa fa-search-plus"></i> Quick view</a>
