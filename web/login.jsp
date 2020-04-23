@@ -39,7 +39,7 @@
                     <label for="username">Email</label>
                     <input
                       name="username"
-                      type="text"
+                      type="email"
                       class="form-control validate"
                       id="username"
                       value=""

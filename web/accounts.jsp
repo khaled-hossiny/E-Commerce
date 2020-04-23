@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -75,7 +77,7 @@
                   <span> Settings <i class="fas fa-angle-down"></i> </span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Profile</a>
+                  <a class="dropdown-item" href="UpdateServlet">Profile</a>
 
                 </div>
               </li>
@@ -107,7 +109,7 @@
         <div class="row tm-content-row">
           <div class="tm-block-col tm-col-avatar">
             <div class="tm-bg-primary-dark tm-block tm-block-avatar">
-              <h2 class="tm-block-title">Change Avatar</h2>
+              <h2 class="tm-block-title"><c:out value="${product.id}"></h2>
               <div class="tm-avatar-container">
                 <img
                   src="img/avatar.png"
@@ -181,14 +183,14 @@
                     Update Your Profile
                   </button>
                 </div>
-                <div class="col-12">
-                  <button
-                    type="submit"
-                    class="btn btn-primary btn-block text-uppercase"
-                  >
-                    Delete Your Account
-                  </button>
-                </div>
+<%--                <div class="col-12">--%>
+<%--                  <button--%>
+<%--                    type="submit"--%>
+<%--                    class="btn btn-primary btn-block text-uppercase"--%>
+<%--                  >--%>
+<%--                    Delete Your Account--%>
+<%--                  </button>--%>
+<%--                </div>--%>
               </form>
             </div>
           </div>

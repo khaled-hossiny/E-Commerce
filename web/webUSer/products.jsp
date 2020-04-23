@@ -61,8 +61,9 @@
                             <h3 class="product-price">$${product.price}</h3>
                             <h2 class="product-name"><a href="product?id=${product.id}">${product.name}</a></h2>
                             <div class="product-btns">
-                                <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart
-                                </button>
+                                <a class="primary-btn add-to-cart" href="product?id=${product.id}"><i
+                                        class="fa fa-shopping-cart"></i> Add to Cart
+                                </a>
                             </div>
                         </div>
                     </div>

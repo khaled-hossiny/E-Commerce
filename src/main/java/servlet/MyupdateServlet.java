@@ -25,23 +25,26 @@ public class MyupdateServlet extends HttpServlet {
         email = request.getParameter("email");
         password = request.getParameter("password");
         address = request.getParameter("address");
+        System.out.println("doPost"+password);
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
         UserServiceImp dao = new UserServiceImp();
+
         //User userObject = new Buyer();
         user.setAddress(address);
         user.setLastName(lastName);
         user.setFirstName(firstName);
         user.setPassword(password);
         user.setEmail(email);
+        System.out.println("doGet"+password);
         System.out.println("User is my update = "+ user.getId());
         System.out.println("User Dao = " +user);
       dao.editUser(user);
 
-        response.sendRedirect("HomeServlet");
+        response.sendRedirect("ShowUsers");
 
 
 

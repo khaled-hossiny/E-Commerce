@@ -1,5 +1,6 @@
 package servlet;
 
+import entity.Category;
 import entity.Product;
 import service.BuyerService;
 import service.BuyerServiceImpl;
@@ -26,12 +27,14 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String searchQuery = req.getParameter("searchQuery");
         List<Product> products;
+
         if (searchQuery != null) {
             products = buyerService.searchProduct(searchQuery);
         } else {
             products = buyerService.getAllProducts();
         }
         req.setAttribute("products", products);
+
         req.getRequestDispatcher("products.jsp").forward(req, resp);
     }
 }

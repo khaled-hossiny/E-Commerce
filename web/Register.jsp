@@ -42,6 +42,8 @@
                                         type="text"
                                         class="form-control validate"
                                         id="firstName"
+                                        minlength="3"
+                                        pattern="^$|^\S+.*"
                                         value=""
                                         required
                                 />
@@ -53,6 +55,8 @@
                                         type="text"
                                         class="form-control validate"
                                         id="lastName"
+                                        minlength="3"
+                                        pattern="^$|^\S+.*"
                                         value=""
                                         required
                                 />
@@ -61,7 +65,7 @@
                                 <label for="email">Email</label>
                                 <input
                                         name="email"
-                                        type="text"
+                                        type="email"
                                         class="form-control validate"
                                         id="email"
                                         value=""
@@ -75,6 +79,7 @@
                                         type="password"
                                         class="form-control validate"
                                         id="password"
+                                        minlength="8"
                                         value=""
                                         required
                                 />
@@ -84,6 +89,7 @@
                                 <input
                                         name="address"
                                         type="text"
+                                        minlength="3"
                                         class="form-control validate"
                                         id="address"
                                         value=""
@@ -98,9 +104,9 @@
                                     Sign Up
                                 </button>
                             </div>
-                            <button class="mt-5 btn btn-primary btn-block text-uppercase">
-                                Forgot your password?
-                            </button>
+<%--                            <button class="mt-5 btn btn-primary btn-block text-uppercase">--%>
+<%--                                Forgot your password?--%>
+<%--                            </button>--%>
                         </form>
                     </div>
                 </div>

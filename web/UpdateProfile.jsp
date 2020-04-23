@@ -80,7 +80,6 @@
                                         type="password"
                                         class="form-control validate"
                                         id="password"
-                                        required
                                         value=<%=request.getAttribute("password")%>
 
                                 />
@@ -103,7 +102,7 @@
                                         class="btn btn-primary btn-block text-uppercase"
                                         onclick="view(this)"
                                         href="MyupdateServlet"/>
-
+                                      Update Profile
 
                                 </a>
                             </div>
@@ -131,6 +130,7 @@
             {"firstName": firstname,"lastName" : lastname , "email":email, "password":password , "address":address }
         );
         console.log(firstname);
+        console.log(password);
 
 
     }

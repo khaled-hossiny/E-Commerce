@@ -112,17 +112,5 @@ public class AdminServiceImpl extends UserServiceImp implements AdminService {
     public EntityManager getEntityManager() {
         return entityManager;
     }
-//    public int deleteCategory(int parseInt) {
-//        entityManager.getTransaction().begin();
-//        Category category = entityManager.find(Category.class, parseInt);
-//
-//        entityManager.remove(category);
-//        entityManager.getTransaction().commit();
-//        if(entityManager.contains(category)){
-//            return 0;
-//        }else{
-//            return 1;
-//        }
-//
-//    }
+
 }

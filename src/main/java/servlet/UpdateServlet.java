@@ -21,6 +21,7 @@ public class UpdateServlet extends HttpServlet {
         String lastName = user.getLastName();
         String email = user.getEmail();
         String address = user.getAddress();
+        String password=user.getPassword();
 
         user.getLastName();
         user.getEmail();
@@ -31,6 +32,7 @@ public class UpdateServlet extends HttpServlet {
         request.setAttribute("lastname",lastName);
         request.setAttribute("email",email);
         request.setAttribute("address",address);
+        request.setAttribute("password",password);
 
 
         request.getRequestDispatcher("UpdateProfile.jsp").include(request, response);

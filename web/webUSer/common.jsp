@@ -29,9 +29,10 @@
                         <input class="input search-input" type="text" placeholder="Enter your keyword"
                                name="searchQuery">
                         <select class="input search-categories">
-                            <option value="0">All Categories</option>
-                            <option value="1">Category 01</option>
-                            <option value="1">Category 02</option>
+                        <c:forEach items="${categories}" var="categories">
+                            <option value="${categories.name}"><c:out value="${categories.name}"/></option>
+                        </c:forEach>
+
                         </select>
                         <button class="search-btn"><i class="fa fa-search"></i></button>
                     </form>
@@ -50,7 +51,7 @@
                         </div>
                         <h4>Balance : $${balance}</h4>
                         <ul class="custom-menu">
-                            <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+                            <li><a href="../UpdateServlet"><i class="fa fa-user-o"></i> My Account</a></li>
                             <li><a href="../logout"><i class="fa fa-sign-out"></i> Sign out</a></li>
                         </ul>
                     </li>
@@ -120,8 +121,9 @@
             <div class="category-nav show-on-click">
                 <span class="category-header">Categories <i class="fa fa-list"></i></span>
                 <ul class="category-list">
-                    <li><a href="#">Men’s Clothing</a></li>
-                    <li><a href="#">View All</a></li>
+             <c:forEach items="${categories}" var="categories">
+                    <li><a href="#"><c:out value="${categories.name}"/></a></li>
+             </c:forEach>
                 </ul>
             </div>
             <!-- /category nav -->

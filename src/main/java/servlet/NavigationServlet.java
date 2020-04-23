@@ -2,7 +2,9 @@ package servlet;
 
 import entity.Buyer;
 import entity.CartProduct;
+import entity.Category;
 import entity.ShoppingCart;
+import service.BuyerService;
 import utility.BuyerSession;
 
 import javax.inject.Inject;
@@ -19,9 +21,12 @@ import java.util.Set;
 public class NavigationServlet extends HttpServlet {
     @Inject
     BuyerSession buyerSession;
+    @Inject
+    BuyerService buyerService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Category> categories=buyerService.getAllCategories();
         Buyer buyer = buyerSession.getBuyer();
         ShoppingCart shoppingCart = buyer.getShoppingCartsById();
         shoppingCart.calculateTotalCost();
@@ -33,6 +38,7 @@ public class NavigationServlet extends HttpServlet {
         req.setAttribute("cartProducts", cartProducts);
         req.setAttribute("cartSize", cartSize);
         req.setAttribute("balance", balance);
+        req.setAttribute("categories",categories);
         req.getRequestDispatcher("webUSer/common.jsp").include(req, resp);
     }
 }
